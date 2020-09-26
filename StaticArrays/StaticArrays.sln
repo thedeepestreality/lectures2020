@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Statistics", "Statistics\St
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SnakeArray", "SnakeArray\SnakeArray.vcxproj", "{668B095B-1115-4056-BB9D-3AE412A56DF4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CStrings", "CStrings\CStrings.vcxproj", "{05700FEB-BD49-480D-B22E-8F0E618E7A05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Release|x64.Build.0 = Release|x64
 		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Release|x86.ActiveCfg = Release|Win32
 		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Release|x86.Build.0 = Release|Win32
+		{05700FEB-BD49-480D-B22E-8F0E618E7A05}.Debug|x64.ActiveCfg = Debug|x64
+		{05700FEB-BD49-480D-B22E-8F0E618E7A05}.Debug|x64.Build.0 = Debug|x64
+		{05700FEB-BD49-480D-B22E-8F0E618E7A05}.Debug|x86.ActiveCfg = Debug|Win32
+		{05700FEB-BD49-480D-B22E-8F0E618E7A05}.Debug|x86.Build.0 = Debug|Win32
+		{05700FEB-BD49-480D-B22E-8F0E618E7A05}.Release|x64.ActiveCfg = Release|x64
+		{05700FEB-BD49-480D-B22E-8F0E618E7A05}.Release|x64.Build.0 = Release|x64
+		{05700FEB-BD49-480D-B22E-8F0E618E7A05}.Release|x86.ActiveCfg = Release|Win32
+		{05700FEB-BD49-480D-B22E-8F0E618E7A05}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
