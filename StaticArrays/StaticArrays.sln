@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Statistics", "Statistics\Statistics.vcxproj", "{670CC0B1-9191-400F-A038-A6D656D0F2BF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SnakeArray", "SnakeArray\SnakeArray.vcxproj", "{668B095B-1115-4056-BB9D-3AE412A56DF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{670CC0B1-9191-400F-A038-A6D656D0F2BF}.Release|x64.Build.0 = Release|x64
 		{670CC0B1-9191-400F-A038-A6D656D0F2BF}.Release|x86.ActiveCfg = Release|Win32
 		{670CC0B1-9191-400F-A038-A6D656D0F2BF}.Release|x86.Build.0 = Release|Win32
+		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Debug|x64.ActiveCfg = Debug|x64
+		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Debug|x64.Build.0 = Debug|x64
+		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Debug|x86.ActiveCfg = Debug|Win32
+		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Debug|x86.Build.0 = Debug|Win32
+		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Release|x64.ActiveCfg = Release|x64
+		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Release|x64.Build.0 = Release|x64
+		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Release|x86.ActiveCfg = Release|Win32
+		{668B095B-1115-4056-BB9D-3AE412A56DF4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

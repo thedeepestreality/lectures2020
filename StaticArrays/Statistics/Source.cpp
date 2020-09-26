@@ -8,7 +8,7 @@ int main()
 	const int MinVal = -10;
 	const int MaxVal = 10;
 	int min, max;
-	double mean = 0;
+	double mean;
 	//Declare array;
 	int arr[Size];
 
@@ -22,9 +22,11 @@ int main()
 		auto curr = arr[idx];
 		max = ((curr > max) ? curr : max);
 		min = ((curr < min) ? curr : min);
-		mean += curr;
 	}
-	mean /= Size;
+
+	mean = arr[0];
+	for (size_t idx = 1; idx < Size; ++idx)
+		mean = mean + (arr[idx] - mean) / (idx+1);
 
 	//Printing array
 	for (size_t idx = 0; idx < Size; ++idx)
