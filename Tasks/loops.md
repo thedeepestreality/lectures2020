@@ -49,7 +49,7 @@
 8) Вычислить и вывести на экран в виде таблицы значения функции, заданной с
 помощью ряда
 
-![formula](https://render.githubusercontent.com/render/math?math=%5Csum_%7Bn%3D1%7D%5E%7B%5Cinfty%7D%5Cfrac%7B(-1)%5E%7Bn%2B1%7Dx%5E%7B2n%2B1%7D%7D%7B(2n-1)!%7D)
+![formula](https://render.githubusercontent.com/render/math?math=%5Csum_%7Bn%3D1%7D%5E%7B%5Cinfty%7D%5Cfrac%7B(-1)%5E%7Bn%2B1%7Dx%5E%7B2n-1%7D%7D%7B(2n-1)!%7D)
 
 на интервале от x1 до x2 с шагом dx. Вычисления проводить, пока очередное слагаемое по модулю больше заданной точности eps. В таблицу добавить столбец со значением sin(x).
 
