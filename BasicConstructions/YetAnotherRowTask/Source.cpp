@@ -15,6 +15,9 @@ int main()
 		std::cout << '\n';
 		x1 += dx;
 	}
+	std::cout.precision(32);
+	std::cout << (0.1 == (1.1 - 1)) << std::endl;
+	std::cout << 0.1 << ' ' << 1.1 << ' ' << 1.1 - 1 << '\n';
 	system("pause");
 	return 0;
 }
