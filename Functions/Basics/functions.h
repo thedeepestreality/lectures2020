@@ -1,4 +1,6 @@
-#pragma once
+//#pragma once
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
 
 /// <summary> global variable </summary>
 extern int global_var;
@@ -22,3 +24,7 @@ void Swap(int& a, int& b);
 int mpow(int val, int deg);
 double mpow(double val, int deg);
 double mpow(double val, double deg);
+
+int count_calls();
+
+#endif
