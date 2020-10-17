@@ -1,16 +1,21 @@
 #pragma once
+
+/// <summary> global variable </summary>
 extern int global_var;
-//prints 'hello' to console
+
+/// <summary> prints 'hello' to console </summary>
 void print_hello();
-//prints num to console
-//num -- argument to print
+
+/// <summary> prints num </summary>
+/// <param name="num"> number to print </param>
 void print_num(const int num);
-//calculates sum of two operands
-//a -- first operand
-//b -- second operand
-//returns sum of a and b
+
+/// <summary> calculates sum </summary>
+/// <param name="num"> first operand </param>
+/// <returns> sum of a and b </returns>
 int sum(int a, int b);
 
+//test comment -- will also be used by intellisense
 void Swap(int* a, int* b);
 void Swap(int& a, int& b);
 
