@@ -1,23 +1,29 @@
 #include <iostream>
 
-double mean(const int Arr[], const size_t Size)
+template <typename Type>
+Type mean(const Type Arr[], const size_t Size)
 {
-    double sum = 0;
+    Type sum = 0;
     for (size_t idx = 0; idx < Size; ++idx)
         sum += Arr[idx];
     return sum/Size;
 }
 
-int* new_array(const size_t Size)
+//int (*m)(const int* const, const size_t) = mean;
+auto fptr = mean<int>;
+
+template <typename Type>
+Type* new_array(const size_t Size)
 {
-    return new int[Size];
+    return new Type[Size];
 }
 
-int** new_array(const size_t Rows, const size_t Cols)
+template <typename Type>
+Type** new_array(const size_t Rows, const size_t Cols)
 {
-    int** new_arr = new int* [Rows];
+    Type** new_arr = new Type * [Rows];
     for (size_t idx = 0; idx < Rows; ++idx)
-        new_arr[idx] = new_array(Cols);
+        new_arr[idx] = new_array<Type>(Cols);
     return new_arr;
 }
 
@@ -74,12 +80,7 @@ int* row_means( const int** Arr,
 {
     int* means = new int[Rows];
     for (size_t row = 0; row < Rows; ++row)
-    {
-        means[row] = 0;
-        for (size_t col = 0; col < Cols; ++col)
-            means[row] += Arr[row][col];
-        means[row] /= Cols;
-    }
+        means[row] = mean(Arr[row], Cols);
     return means;
 }
 
@@ -89,28 +90,50 @@ void row_means(const int** Arr,
                 int* means)
 {
     for (size_t row = 0; row < Rows; ++row)
-    {
-        int sum = 0;
-        for (size_t col = 0; col < Cols; ++col)
-            sum += Arr[row][col];
-        sum /= (int)Cols;
-        means[row] = sum;
-    }
+        means[row] = mean(Arr[row], Rows);
+}
+
+template <class Type>
+void dummy_fun(Type ptr1, Type ptr2)
+{
+    Type ptr3 = ptr1 + ptr2;
+}
+
+//auto fptr_df = dummy_fun<int*>;
+
+template <int N>
+void calc(int x)
+{
+    //N = 10;
+}
+
+template <typename Type, typename T2 = double>
+void _pow(Type x, T2 deg)
+{
+    std::cout << "General case\n";
+}
+
+template <>
+void _pow(int x, int deg)
+{
+    std::cout << "Int case\n";
 }
 
 int main()
 {
+    _pow(int(1), double(2.0));
+    calc<10>(2);
     std::cout << "Enter Rows, Cols, Lb, Ub: ";
     size_t Rows, Cols;
     int Lb, Ub;
     std::cin >> Rows >> Cols >> Lb >> Ub;
 
-    int** arr = new_array(Rows, Cols);
+    int** arr = new_array<int>(Rows, Cols);
    // fill_random_array(arr, Rows, Cols, Lb, Ub);
     fill_random_array(arr, Rows, Cols, Lb);
     print_array((const int**)arr, Rows, Cols);
 
-    int* means = new_array(Rows);
+    int* means = new_array<int>(Rows);
     row_means((const int**)arr, Rows, Cols, means);
     std::cout << "Array of row means: \n";
     print_array(means, Rows);
