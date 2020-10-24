@@ -107,7 +107,7 @@ int main()
 
     int** arr = new_array(Rows, Cols);
    // fill_random_array(arr, Rows, Cols, Lb, Ub);
-    fill_random_array(arr, Rows, Cols);
+    fill_random_array(arr, Rows, Cols, Lb);
     print_array((const int**)arr, Rows, Cols);
 
     int* means = new_array(Rows);
