@@ -31,5 +31,5 @@ int main()
     std::cout << compose<sqr, 3>(2) << '\n';
     std::cout << Accumulate<3, 6, -2, 100500> << '\n';
     print_args(1, 2.5, 'c', "string", false);
-    return 0;
+    return 1;
 }
