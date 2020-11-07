@@ -34,19 +34,43 @@ char** char_str_from_file(const char* filename,
     return lines;
 }
 
+void copy_file( const char* in_file,
+                const char* out_file)
+{
+    std::ifstream in(in_file);
+    if (!in.is_open())
+        throw std::runtime_error("failed to open in file");
+    std::ofstream out(out_file);
+    if (!out.is_open())
+        throw std::runtime_error("failed to open out file");
+    int c;
+    while ((c = in.get()) != EOF)
+        out << (char)c;
+ /*   char c;
+    while (!in.eof())
+    {
+        out << (char)in.get();
+    }*/
+
+    in.close();
+    out.close();
+}
+
 int main(int argc, char* argv[])
 {
     //std::ofstream out_file("out.txt");
    // out_file.open("C:\\repos\\out.txt");
    // out_file.open(R"(C:\repos 1\out.txt)");
-    char_str_to_file("out.txt", argv, argc);
+
+  /*  char_str_to_file("out.txt", argv, argc);
     size_t size;
     char** lines = char_str_from_file("in.txt", size);
     char_str_to_file("out2.txt", lines, size);
 
     for (size_t idx = 0; idx < size; ++idx)
         delete[] lines[idx];
-    delete[] lines;
+    delete[] lines;*/
+    copy_file("in.txt", "out.txt");
 
     return 0;
 }
