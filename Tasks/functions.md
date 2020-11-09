@@ -30,7 +30,7 @@ bool find_value(const char* const vars[], const char* name, char* value);
 
 Примеры:
 ``` 
-	const char* const vars[] = {"abc=cde", "user=cap", "path=/usr/bin"};
-    find_value(vars, "user", value) -> true, value = "cap"
-    find_value(vars, "system",value) -> false
+const char* const vars[] = {"abc=cde", "user=cap", "path=/usr/bin"};
+find_value(vars, "user", value) -> true, value = "cap"
+find_value(vars, "system",value) -> false
 ```
