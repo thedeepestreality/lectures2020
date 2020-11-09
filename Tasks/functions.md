@@ -19,8 +19,9 @@
 **Задача 7)** Написать функцию, осуществляющую поиск значения переменной по имени в массиве строчек формата "name=value". 
 
 Нотация функции:
-bool find_value(const char** vars, const char* name, char* value);
-
+```
+bool find_value(const char* const vars[], const char* name, char* value);
+```
 Считаем, что в value уже выделено достаточное количество памяти для записи.
 
 Функция возвращает true, если значение найдено.
@@ -29,7 +30,7 @@ bool find_value(const char** vars, const char* name, char* value);
 
 Примеры:
 ``` 
-	const char* vars[] = {"abc=cde", "user=cap", "path=/usr/bin"};
+	const char* const vars[] = {"abc=cde", "user=cap", "path=/usr/bin"};
     find_value(vars, "user", value) -> true, value = "cap"
     find_value(vars, "system",value) -> false
 ```
