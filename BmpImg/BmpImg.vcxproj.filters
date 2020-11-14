@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImgFunctions.h">
+    <ClInclude Include="BmpStructures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BmpStructures.h">
+    <ClInclude Include="ImgFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
