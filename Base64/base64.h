@@ -1,3 +1,3 @@
 #pragma once
 
-char* base64Encode(const char message[], int messageSize);
+char* base64_encode(const char message[], int message_size);

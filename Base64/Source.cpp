@@ -4,8 +4,8 @@
 int main()
 {
 	char str[] = "1234";
-	char* encoded = base64Encode(str, strlen(str));
+	char* encoded = base64_encode(str, strlen(str));
 	std::cout << encoded << std::endl;
-	system("pause");
+
 	return 0;
 }
