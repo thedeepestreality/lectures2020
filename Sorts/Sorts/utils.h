@@ -7,6 +7,12 @@ using std::chrono::duration_cast;
 
 static high_resolution_clock::time_point start;
 
+template <typename Type>
+using Comparator = bool(*)(Type const&, Type const&);
+
+template <typename Type>
+using Sort = void(*)(Type*, size_t const, Comparator<Type>);
+
 void tic()
 {
     start = high_resolution_clock::now();
@@ -24,7 +30,7 @@ void gen_rand_array(double arr[], size_t const Size)
 }
 
 template <typename Type>
-void copy_array(Type source[], Type dest[], size_t const Size)
+void copy_array(Type const source[], Type dest[], size_t const Size)
 {
     for (size_t idx = 0; idx < Size; ++idx)
         dest[idx] = source[idx];
