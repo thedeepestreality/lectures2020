@@ -5,6 +5,7 @@
 #include "selection_sort.h"
 #include "insertion_sort.h"
 #include "bogo_sort.h"
+#include "merge_sort.h"
 
 bool Less(double const& a, double const& b)
 {
@@ -59,19 +60,21 @@ Sort<double> const sorts_array[] = {
     {insertion_sort, "insertion sort"}
 };
 
-void test_all_sorts()
+void test_all_sorts(size_t const Size)
 {
-    const int N = 1000;
-    double* arr = new double[N];
-    gen_rand_array(arr, N);
+    double* arr = new double[Size];
+    gen_rand_array(arr, Size);
+    Comparator<double> comp = [](double const& a, double const& b) {return a < b; };
     for (auto sort : sorts_array)
-        test_sort(sort.name, sort.sort_func, arr, N);
+        //test_sort(sort.name, sort.sort_func, arr, Size, Less);
+        test_sort(sort.name, sort.sort_func, arr, Size, comp);
     delete[] arr;
 }
 
 int main()
 {
     srand(time(NULL));
-    test_all_sorts();
+   // test_all_sorts(1000);
+    dummy_test_sort("Merge sort", merge_sort);
     return 0;
 }

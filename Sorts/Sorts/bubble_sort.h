@@ -2,7 +2,7 @@
 #include "utils.h"
 
 template <typename Type>
-void bubble_sort(Type arr[], size_t const size, bool(*comp)(Type const&, Type const&) = Greater)
+void bubble_sort(Type arr[], size_t const size, Comparator<Type> comp = Greater)
 {
     for (size_t iter = 1; iter < size; ++iter)
         for (size_t idx = 0; idx < size - iter; ++idx)

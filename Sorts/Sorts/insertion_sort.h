@@ -1,7 +1,8 @@
 #pragma once
+#include "utils.h"
 
 template <typename Type>
-void insertion_sort(Type arr[], size_t const Size, bool(*comp)(Type const&, Type const&) = Greater)
+void insertion_sort(Type arr[], size_t const Size, Comparator<Type> comp = Greater)
 {
     for (size_t iter = 0; iter < Size - 1; ++iter)
     {
