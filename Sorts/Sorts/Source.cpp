@@ -6,6 +6,7 @@
 #include "insertion_sort.h"
 #include "bogo_sort.h"
 #include "merge_sort.h"
+#include "heap_sort.h"
 
 bool Less(double const& a, double const& b)
 {
@@ -55,10 +56,11 @@ void dummy_test_sort(const char sort_name[],
 }
 
 Sort<double> const sorts_array[] = {
-    {bubble_sort, "Bubble sort"},
-    {selection_sort, "Seletion sort"},
-    {insertion_sort, "Insertion sort"},
-    {merge_sort, "Merge sort"}
+   // {bubble_sort, "Bubble sort"},
+   // {selection_sort, "Selection sort"},
+    //{insertion_sort, "Insertion sort"},
+    {merge_sort, "Merge sort"},
+    {heap_sort, "Heap sort"}
 };
 
 void test_all_sorts(size_t const Size)
@@ -75,7 +77,7 @@ void test_all_sorts(size_t const Size)
 int main()
 {
     srand(time(NULL));
-    test_all_sorts(10000);
-   // dummy_test_sort("Merge sort", merge_sort);
+    test_all_sorts(1'000'000);
+    //dummy_test_sort("Heap sort", heap_sort);
     return 0;
 }
