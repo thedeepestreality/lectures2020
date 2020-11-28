@@ -57,7 +57,8 @@ void dummy_test_sort(const char sort_name[],
 Sort<double> const sorts_array[] = {
     {bubble_sort, "Bubble sort"},
     {selection_sort, "Seletion sort"},
-    {insertion_sort, "insertion sort"}
+    {insertion_sort, "Insertion sort"},
+    {merge_sort, "Merge sort"}
 };
 
 void test_all_sorts(size_t const Size)
@@ -74,7 +75,7 @@ void test_all_sorts(size_t const Size)
 int main()
 {
     srand(time(NULL));
-   // test_all_sorts(1000);
-    dummy_test_sort("Merge sort", merge_sort);
+    test_all_sorts(10000);
+   // dummy_test_sort("Merge sort", merge_sort);
     return 0;
 }
