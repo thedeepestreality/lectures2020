@@ -1,12 +1,7 @@
 #include <iostream>
-#include "bubble_sort.h"
 #include <ctime>
 #include "utils.h"
-#include "selection_sort.h"
-#include "insertion_sort.h"
-#include "bogo_sort.h"
-#include "merge_sort.h"
-#include "heap_sort.h"
+#include "sorts.h"
 
 bool Less(double const& a, double const& b)
 {

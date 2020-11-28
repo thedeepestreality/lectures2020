@@ -20,25 +20,28 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bubble_sort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="selection_sort.h">
+    <ClInclude Include="sorts\bogo_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="insertion_sort.h">
+    <ClInclude Include="sorts\bubble_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bogo_sort.h">
+    <ClInclude Include="sorts\heap_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="merge_sort.h">
+    <ClInclude Include="sorts\insertion_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="heap_sort.h">
+    <ClInclude Include="sorts\merge_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorts\selection_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
