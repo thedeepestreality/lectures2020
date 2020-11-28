@@ -34,3 +34,17 @@ void merge_sort(Type arr[], size_t const Size, Comparator<Type> comp = Greater)
     merge_sort(arr + Split_idx, Size - Split_idx, comp);
     merge(arr, Size, Split_idx, comp);
 }
+
+template <typename Type>
+void merge_sort_iter(Type arr[], size_t const Size, Comparator<Type> comp)
+{
+    for (size_t block_size = 1; block_size < Size; block_size *= 2)
+    {
+        size_t const merge_size = 2 * block_size;
+        for (size_t idx = 0; idx < Size - block_size; idx += merge_size)
+        {
+            size_t const act_size = std::min(merge_size, Size - idx);
+            merge(arr + idx, act_size, block_size, comp);
+        }
+    }
+}

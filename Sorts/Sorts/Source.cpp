@@ -60,6 +60,7 @@ Sort<double> const sorts_array[] = {
    // {selection_sort, "Selection sort"},
     //{insertion_sort, "Insertion sort"},
     {merge_sort, "Merge sort"},
+    {merge_sort_iter, "Merge sort iter"},
     {heap_sort, "Heap sort"}
 };
 
@@ -68,7 +69,7 @@ void test_all_sorts(size_t const Size)
     double* arr = new double[Size];
     gen_rand_array(arr, Size);
     Comparator<double> comp = [](double const& a, double const& b) {return a < b; };
-    for (auto sort : sorts_array)
+    for (auto const& sort : sorts_array)
         //test_sort(sort.name, sort.sort_func, arr, Size, Less);
         test_sort(sort.name, sort.sort_func, arr, Size, comp);
     delete[] arr;
@@ -78,6 +79,6 @@ int main()
 {
     srand(time(NULL));
     test_all_sorts(1'000'000);
-    //dummy_test_sort("Heap sort", heap_sort);
+   // dummy_test_sort("Merge sort iter", merge_sort_iter);
     return 0;
 }
