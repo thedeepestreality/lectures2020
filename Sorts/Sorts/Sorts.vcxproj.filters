@@ -32,5 +32,8 @@
     <ClInclude Include="insertion_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="bogo_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

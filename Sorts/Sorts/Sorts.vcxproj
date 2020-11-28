@@ -142,6 +142,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bogo_sort.h" />
     <ClInclude Include="bubble_sort.h" />
     <ClInclude Include="insertion_sort.h" />
     <ClInclude Include="selection_sort.h" />

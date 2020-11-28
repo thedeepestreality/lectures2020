@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "selection_sort.h"
 #include "insertion_sort.h"
+#include "bogo_sort.h"
 
 bool Less(double const& a, double const& b)
 {
@@ -25,7 +26,7 @@ void test_bubble_sort()
 
 template <typename Type>
 void test_sort( const char sort_name[], 
-                Sort<Type> sort, 
+                SortFunc<Type> sort, 
                 Type const arr[], 
                 size_t const Size, 
                 Comparator<Type> comp = Greater<Type>)
@@ -39,7 +40,7 @@ void test_sort( const char sort_name[],
 }
 
 void dummy_test_sort(const char sort_name[],
-    Sort<double> sort,
+    SortFunc<double> sort,
     Comparator<double> comp = Greater<double>)
 {
     const int N = 10;
@@ -52,17 +53,25 @@ void dummy_test_sort(const char sort_name[],
     std::cout << '\n';
 }
 
+Sort<double> const sorts_array[] = {
+    {bubble_sort, "Bubble sort"},
+    {selection_sort, "Seletion sort"},
+    {insertion_sort, "insertion sort"}
+};
+
+void test_all_sorts()
+{
+    const int N = 1000;
+    double* arr = new double[N];
+    gen_rand_array(arr, N);
+    for (auto sort : sorts_array)
+        test_sort(sort.name, sort.sort_func, arr, N);
+    delete[] arr;
+}
+
 int main()
 {
     srand(time(NULL));
-    const int N = 40000;
-    double* arr = new double[N];
-    gen_rand_array(arr, N);
-    //test_sort("Bubble sort", bubble_sort, arr, N);
-    //test_sort("Selection sort", selection_sort, arr, N);
-    test_sort("Insertion sort", insertion_sort, arr, N);
-
-    delete[] arr;
-
+    test_all_sorts();
     return 0;
 }

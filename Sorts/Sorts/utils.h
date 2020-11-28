@@ -11,7 +11,14 @@ template <typename Type>
 using Comparator = bool(*)(Type const&, Type const&);
 
 template <typename Type>
-using Sort = void(*)(Type*, size_t const, Comparator<Type>);
+using SortFunc = void(*)(Type*, size_t const, Comparator<Type>);
+
+template <typename Type>
+struct Sort
+{
+    SortFunc<Type> sort_func;
+    char const name[32];
+};
 
 void tic()
 {
