@@ -9,14 +9,18 @@ size_t quick_sort_partition(Type arr[],
                             Comparator<Type> comp = Greater,
                             Comparator<Type> eq = Equal)
 {
-    auto loose_ineq = [=](Type const& a, Type const& b) { return comp(a, b) || eq(a, b); };
+ //   auto loose_ineq = [=](Type const& a, Type const& b) { return comp(a, b) || eq(a, b); };
     size_t pivot_idx = (l_idx + r_idx) / 2;
     Type const Pivot = arr[pivot_idx];
     while (l_idx < r_idx)
     {
-        while (loose_ineq(Pivot, arr[l_idx]) && l_idx < pivot_idx)
+      /*  while (loose_ineq(Pivot, arr[l_idx]) && l_idx < pivot_idx)
             ++l_idx;
         while (loose_ineq(arr[r_idx], Pivot) && r_idx > pivot_idx)
+            --r_idx;*/
+        while (GreaterOrEqual(Pivot,arr[l_idx]) && l_idx < pivot_idx)
+            ++l_idx;
+        while (GreaterOrEqual(arr[r_idx], Pivot) && r_idx > pivot_idx)
             --r_idx;
         if (l_idx == r_idx) //!!!
             break;

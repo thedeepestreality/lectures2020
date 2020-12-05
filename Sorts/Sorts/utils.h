@@ -30,10 +30,21 @@ long long toc()
     return duration_cast<milliseconds>(high_resolution_clock::now() - start).count();
 }
 
-void gen_rand_array(double arr[], size_t const Size)
+template <typename Type>
+void gen_rand_array(Type arr[], size_t const Size) {}
+
+template <>
+void gen_rand_array<double>(double arr[], size_t const Size)
 {
     for (size_t idx = 0; idx < Size; ++idx)
         arr[idx] = (double)rand() / RAND_MAX;
+}
+
+template <>
+void gen_rand_array<int>(int arr[], size_t const Size)
+{
+    for (size_t idx = 0; idx < Size; ++idx)
+        arr[idx] = RAND_MAX/2 - rand();
 }
 
 template <typename Type>
@@ -53,4 +64,10 @@ template <typename Type>
 bool Equal(Type const& a, Type const& b)
 {
     return a == b;
+}
+
+template <typename Type>
+bool GreaterOrEqual(Type const& a, Type const& b)
+{
+    return a >= b;
 }

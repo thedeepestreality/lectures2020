@@ -28,7 +28,7 @@ void test_sort( const char sort_name[],
                 size_t const Size, 
                 Comparator<Type> comp = Greater<Type>)
 {
-    double* tmp = new double[Size];
+    Type* tmp = new Type[Size];
     copy_array(arr, tmp, Size);
     tic();
     sort(tmp, Size, comp);
@@ -50,21 +50,23 @@ void dummy_test_sort(const char sort_name[],
     std::cout << '\n';
 }
 
-Sort<double> const sorts_array[] = {
+Sort<int> const sorts_array[] = {
    // {bubble_sort, "Bubble sort"},
    // {selection_sort, "Selection sort"},
     //{insertion_sort, "Insertion sort"},
     {merge_sort, "Merge sort"},
     {merge_sort_iter, "Merge sort iter"},
     {heap_sort, "Heap sort"},
-    {quick_sort, "Quick sort"}
+    {quick_sort, "Quick sort"},
+    {radix_sort, "Radix sort"}
 };
 
+template <typename Type>
 void test_all_sorts(size_t const Size)
 {
-    double* arr = new double[Size];
+    Type* arr = new Type[Size];
     gen_rand_array(arr, Size);
-    Comparator<double> comp = [](double const& a, double const& b) {return a < b; };
+    Comparator<Type> comp = [](Type const& a, Type const& b) {return a < b; };
     for (auto const& sort : sorts_array)
         //test_sort(sort.name, sort.sort_func, arr, Size, Less);
         //test_sort(sort.name, sort.sort_func, arr, Size, comp);
@@ -72,10 +74,25 @@ void test_all_sorts(size_t const Size)
     delete[] arr;
 }
 
+void test_radix()
+{
+    size_t const Size = 10;
+    int* arr = new int[Size];
+    for (size_t idx = 0; idx < Size; ++idx)
+        arr[idx] = 50-rand() % 100;
+    radix_sort(arr, Size);
+    std::cout << "Radix sort dummy test:\n";
+    for (size_t idx = 0; idx < Size; ++idx)
+        std::cout << arr[idx] << ' ';
+    std::cout << '\n';
+    delete[] arr;
+}
+
 int main()
 {
     srand(time(NULL));
-    test_all_sorts(1'000'000);
+    test_all_sorts<int>(1'500'000);
     //dummy_test_sort("Quick sort", quick_sort);
+    //test_radix();
     return 0;
 }

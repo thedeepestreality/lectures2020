@@ -148,6 +148,7 @@
     <ClInclude Include="sorts\heap_sort.h" />
     <ClInclude Include="sorts\insertion_sort.h" />
     <ClInclude Include="sorts\merge_sort.h" />
+    <ClInclude Include="sorts\radix_sort.h" />
     <ClInclude Include="sorts\selection_sort.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
