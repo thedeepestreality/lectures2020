@@ -1,5 +1,5 @@
 #pragma once
-#include "utils.h"
+#include "..\utils.h"
 
 template <typename Type>
 void bubble_sort(Type arr[], size_t const size, Comparator<Type> comp = Greater)

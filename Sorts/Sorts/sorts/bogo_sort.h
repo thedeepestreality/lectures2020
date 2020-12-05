@@ -1,5 +1,5 @@
 #pragma once
-#include "utils.h"
+#include "..\utils.h"
 
 template <class Type>
 void bogo_sort_like(Type arr[], size_t const len, Comparator<Type> comp = Greater) {

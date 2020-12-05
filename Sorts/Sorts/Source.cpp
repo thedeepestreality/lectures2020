@@ -56,7 +56,8 @@ Sort<double> const sorts_array[] = {
     //{insertion_sort, "Insertion sort"},
     {merge_sort, "Merge sort"},
     {merge_sort_iter, "Merge sort iter"},
-    {heap_sort, "Heap sort"}
+    {heap_sort, "Heap sort"},
+    {quick_sort, "Quick sort"}
 };
 
 void test_all_sorts(size_t const Size)
@@ -66,7 +67,8 @@ void test_all_sorts(size_t const Size)
     Comparator<double> comp = [](double const& a, double const& b) {return a < b; };
     for (auto const& sort : sorts_array)
         //test_sort(sort.name, sort.sort_func, arr, Size, Less);
-        test_sort(sort.name, sort.sort_func, arr, Size, comp);
+        //test_sort(sort.name, sort.sort_func, arr, Size, comp);
+        test_sort(sort.name, sort.sort_func, arr, Size);
     delete[] arr;
 }
 
@@ -74,6 +76,6 @@ int main()
 {
     srand(time(NULL));
     test_all_sorts(1'000'000);
-   // dummy_test_sort("Merge sort iter", merge_sort_iter);
+    //dummy_test_sort("Quick sort", quick_sort);
     return 0;
 }

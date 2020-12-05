@@ -6,3 +6,4 @@
 #include "sorts\bogo_sort.h"
 #include "sorts\merge_sort.h"
 #include "sorts\heap_sort.h"
+#include "sorts\quick_sort.h"

@@ -1,5 +1,5 @@
 #pragma once
-#include "utils.h"
+#include "..\utils.h"
 
 template <typename Type>
 void merge(Type arr[], size_t const Size, size_t const Split_idx, Comparator<Type> comp)
@@ -43,7 +43,8 @@ void merge_sort_iter(Type arr[], size_t const Size, Comparator<Type> comp)
         size_t const merge_size = 2 * block_size;
         for (size_t idx = 0; idx < Size - block_size; idx += merge_size)
         {
-            size_t const act_size = std::min(merge_size, Size - idx);
+            size_t const tail_size = Size - idx;
+            size_t const act_size = merge_size < tail_size ? merge_size : tail_size;
             merge(arr + idx, act_size, block_size, comp);
         }
     }

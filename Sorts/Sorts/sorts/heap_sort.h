@@ -1,5 +1,5 @@
 #pragma once
-#include "utils.h"
+#include "..\utils.h"
 
 template <typename Type>
 void heap_elem(Type arr[], size_t const Size, size_t idx, Comparator<Type> comp = Greater)

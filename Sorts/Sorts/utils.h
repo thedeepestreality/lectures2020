@@ -48,3 +48,9 @@ bool Greater(Type const& a, Type const& b)
 {
     return a > b;
 }
+
+template <typename Type>
+bool Equal(Type const& a, Type const& b)
+{
+    return a == b;
+}
