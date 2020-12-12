@@ -1,5 +1,6 @@
 #pragma once
 #include <chrono>
+#include <iostream>
 
 using std::chrono::high_resolution_clock;
 using std::chrono::milliseconds;
@@ -53,6 +54,69 @@ void copy_array(Type const source[], Type dest[], size_t const Size)
 {
     for (size_t idx = 0; idx < Size; ++idx)
         dest[idx] = source[idx];
+}
+
+template <typename Type>
+void reverse_array(Type source[], size_t const Size)
+{
+    for (size_t idx = 0; idx < Size / 2; ++idx)
+        std::swap(source[idx], source[Size - idx - 1]);
+}
+
+template <typename Type>
+void quick_sort_killer_pretender(Type Array[], size_t const Size)
+{
+    size_t* orig_idx = new size_t[Size];
+    for (size_t idx = 0; idx < Size; ++idx)
+        orig_idx[idx] = idx;
+
+    size_t r_idx = Size - 1;
+
+    for (size_t l_idx = 0; l_idx < r_idx; ++l_idx)
+    {
+        size_t pivot_idx = (r_idx + l_idx) / 2;
+        std::swap(orig_idx[l_idx], orig_idx[pivot_idx]);
+    }
+
+    for (size_t i = 0; i < Size; i++)
+    {
+        size_t idx = orig_idx[i];
+        Array[idx] = (Type)i / Size;
+    }
+
+    delete[] orig_idx;
+}
+
+
+template <typename Type>
+int find(Type const arr[], size_t const Size, Type const& val)
+{
+    int val_idx = -1;
+    for (size_t idx = 0; idx < Size; ++idx)
+        if (arr[idx] == val)
+        {
+            val_idx = idx;
+            break;
+        }
+    return val_idx;
+}
+
+template <typename Type>
+int binary_search_recursive(Type arr[], size_t const size, Type const& val)
+{
+    if (size == 0) 
+        return -1;
+
+    int middle = size / 2;
+
+    if (arr[middle] == val)
+        return middle;
+
+    if (arr[middle] > val)
+        return binary_search_recursive(arr, middle, val);
+
+    int idx = binary_search_recursive(arr + middle + 1, size - middle - 1, val);
+    return idx >= 0 ? middle + 1 + idx : -1;
 }
 
 template <typename Type>

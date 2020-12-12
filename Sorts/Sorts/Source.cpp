@@ -26,12 +26,32 @@ void test_sort( Sort<Type> const& sort,
                 Type const arr[], 
                 size_t const Size)
 {
-    Type* tmp = new Type[Size];
-    copy_array(arr, tmp, Size);
+    Type* arr_copy = new Type[Size];
+
+    //Sort random
+    copy_array(arr, arr_copy, Size);
     tic();
-    sort.sort_func(tmp, Size, sort.comp);
-    std::cout << sort.name << " elapsed: " << toc() << " ms\n";
-    delete[] tmp;
+    sort.sort_func(arr_copy, Size, sort.comp);
+    std::cout << sort.name << " [random] elapsed: " << toc() << " ms\n";
+
+    //Sort sorted
+    tic();
+    sort.sort_func(arr_copy, Size, sort.comp);
+    std::cout << sort.name << " [sorted] elapsed: " << toc() << " ms\n";
+
+    //Sort reversed
+    reverse_array(arr_copy, Size);
+    tic();
+    sort.sort_func(arr_copy, Size, sort.comp);
+    std::cout << sort.name << " [reversed] elapsed: " << toc() << " ms\n";
+
+    //Sort qsort killer
+    quick_sort_killer_pretender(arr_copy, Size);
+    tic();
+    sort.sort_func(arr_copy, Size, sort.comp);
+    std::cout << sort.name << " [q_killer] elapsed: " << toc() << " ms\n";
+
+    delete[] arr_copy;
 }
 
 void dummy_test_sort(const char sort_name[],
@@ -51,7 +71,7 @@ void dummy_test_sort(const char sort_name[],
 Sort<double> const sorts_array[] = {
     // {bubble_sort, "Bubble sort"},
     // {selection_sort, "Selection sort"},
-    // {insertion_sort, "Insertion sort"},
+    //{insertion_sort, "Insertion sort"},
     {merge_sort, "Merge sort"},
     {merge_sort_iter, "Merge sort iter"},
     // {heap_sort, "Heap sort"},
@@ -84,10 +104,22 @@ void test_radix()
     delete[] arr;
 }
 
+void test_qsort_killer()
+{
+    const int N = 10;
+    double* arr = new double[N];
+    std::cout << "qKiller dummy test:\n";
+    quick_sort_killer_pretender(arr, N);
+    for (size_t idx = 0; idx < N; ++idx)
+        std::cout << arr[idx] << ' ';
+    std::cout << '\n';
+}
+
 int main()
 {
     srand(time(NULL));
-    test_all_sorts<double>(1'500'000);
+    //test_qsort_killer();
+    test_all_sorts<double>(2'000'000);
     //dummy_test_sort("Quick sort", quick_sort);
     //test_radix();
     return 0;
