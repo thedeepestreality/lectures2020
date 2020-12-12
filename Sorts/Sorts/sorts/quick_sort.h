@@ -4,7 +4,7 @@
 #include <iostream>
 
 template <typename Type>
-int quick_sort_partition(Type arr[], 
+size_t quick_sort_partition(Type arr[], 
                             int l_idx, 
                             int r_idx, 
                             Comparator<Type> comp = Greater,
@@ -53,38 +53,38 @@ template <typename Type>
 void quick_sort_iter(Type arr[], size_t const Size, Comparator<Type> comp = Greater)
 {
     // Create an auxiliary stack 
-    int* stack = new int[Size];
+    size_t* stack = new size_t[Size];
 
     // initialize top of stack 
-    int top = -1;
-    int l_idx = 0;
-    int r_idx = Size - 1;
+    size_t top = 0;
+    size_t l_idx = 0;
+    size_t r_idx = Size - 1;
     // push initial values of l and h to stack 
-    stack[++top] = l_idx;
-    stack[++top] = r_idx;
+    stack[top++] = l_idx;
+    stack[top++] = r_idx;
 
     // Keep popping from stack while is not empty 
-    while (top > 0) {
+    while (top != 0) {
         // Pop h and l 
-        r_idx = stack[top--];
-        l_idx = stack[top--];
+        r_idx = stack[--top];
+        l_idx = stack[--top];
 
         // Set pivot element at its correct position 
         // in sorted array 
-        int const Pivot = quick_sort_partition(arr, l_idx, r_idx);
+        size_t const Pivot = quick_sort_partition(arr, l_idx, r_idx);
 
         // If there are elements on left side of pivot, 
         // then push left side to stack 
-        if (Pivot - 1 > l_idx) {
-            stack[++top] = l_idx;
-            stack[++top] = Pivot - 1;
+        if (Pivot > l_idx + 1) {
+            stack[top++] = l_idx;
+            stack[top++] = Pivot - 1;
         }
 
         // If there are elements on right side of pivot, 
         // then push right side to stack 
         if (Pivot + 1 < r_idx) {
-            stack[++top] = Pivot + 1;
-            stack[++top] = r_idx;
+            stack[top++] = Pivot + 1;
+            stack[top++] = r_idx;
         }
     }
     delete[] stack;

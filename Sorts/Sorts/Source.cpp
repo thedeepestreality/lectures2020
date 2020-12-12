@@ -55,9 +55,10 @@ Sort<double> const sorts_array[] = {
    // {selection_sort, "Selection sort"},
     //{insertion_sort, "Insertion sort"},
     {merge_sort, "Merge sort"},
-    //{merge_sort_iter, "Merge sort iter"},
+    {merge_sort_iter, "Merge sort iter"},
     //{heap_sort, "Heap sort"},
-    {quick_sort_iter, "Quick sort"}/*,
+    {quick_sort, "Quick sort"},
+    {quick_sort_iter, "Quick sort iter"}/*,
     {radix_sort, "Radix sort"}*/
 };
 
