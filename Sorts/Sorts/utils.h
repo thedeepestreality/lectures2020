@@ -55,7 +55,7 @@ void copy_array(Type const source[], Type dest[], size_t const Size)
 }
 
 template <typename Type>
-bool Greater(Type const& a, Type const& b)
+inline bool Greater(Type const& a, Type const& b)
 {
     return a > b;
 }
@@ -67,7 +67,7 @@ bool Equal(Type const& a, Type const& b)
 }
 
 template <typename Type>
-bool GreaterOrEqual(Type const& a, Type const& b)
+inline bool GreaterOrEqual(Type const& a, Type const& b)
 {
     return a >= b;
 }

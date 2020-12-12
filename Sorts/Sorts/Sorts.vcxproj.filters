@@ -47,5 +47,8 @@
     <ClInclude Include="sorts\radix_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sorts\quick_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

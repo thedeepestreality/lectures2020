@@ -50,15 +50,15 @@ void dummy_test_sort(const char sort_name[],
     std::cout << '\n';
 }
 
-Sort<int> const sorts_array[] = {
+Sort<double> const sorts_array[] = {
    // {bubble_sort, "Bubble sort"},
    // {selection_sort, "Selection sort"},
     //{insertion_sort, "Insertion sort"},
     {merge_sort, "Merge sort"},
-    {merge_sort_iter, "Merge sort iter"},
-    {heap_sort, "Heap sort"},
-    {quick_sort, "Quick sort"},
-    {radix_sort, "Radix sort"}
+    //{merge_sort_iter, "Merge sort iter"},
+    //{heap_sort, "Heap sort"},
+    {quick_sort_iter, "Quick sort"}/*,
+    {radix_sort, "Radix sort"}*/
 };
 
 template <typename Type>
@@ -91,7 +91,7 @@ void test_radix()
 int main()
 {
     srand(time(NULL));
-    test_all_sorts<int>(1'500'000);
+    test_all_sorts<double>(1'500'000);
     //dummy_test_sort("Quick sort", quick_sort);
     //test_radix();
     return 0;
