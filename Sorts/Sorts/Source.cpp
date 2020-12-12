@@ -22,17 +22,15 @@ void test_bubble_sort()
 }
 
 template <typename Type>
-void test_sort( const char sort_name[], 
-                SortFunc<Type> sort, 
+void test_sort( Sort<Type> const& sort, 
                 Type const arr[], 
-                size_t const Size, 
-                Comparator<Type> comp = Greater<Type>)
+                size_t const Size)
 {
     Type* tmp = new Type[Size];
     copy_array(arr, tmp, Size);
     tic();
-    sort(tmp, Size, comp);
-    std::cout << sort_name << " elapsed: " << toc() << " ms\n";
+    sort.sort_func(tmp, Size, sort.comp);
+    std::cout << sort.name << " elapsed: " << toc() << " ms\n";
     delete[] tmp;
 }
 
@@ -51,15 +49,15 @@ void dummy_test_sort(const char sort_name[],
 }
 
 Sort<double> const sorts_array[] = {
-   // {bubble_sort, "Bubble sort"},
-   // {selection_sort, "Selection sort"},
-    //{insertion_sort, "Insertion sort"},
+    // {bubble_sort, "Bubble sort"},
+    // {selection_sort, "Selection sort"},
+    // {insertion_sort, "Insertion sort"},
     {merge_sort, "Merge sort"},
     {merge_sort_iter, "Merge sort iter"},
-    //{heap_sort, "Heap sort"},
-    {quick_sort, "Quick sort"},
-    {quick_sort_iter, "Quick sort iter"}/*,
-    {radix_sort, "Radix sort"}*/
+    // {heap_sort, "Heap sort"},
+    {quick_sort, "Quick sort", GreaterOrEqual},
+    {quick_sort_iter, "Quick sort iter", GreaterOrEqual}
+    // {radix_sort, "Radix sort"}
 };
 
 template <typename Type>
@@ -67,11 +65,8 @@ void test_all_sorts(size_t const Size)
 {
     Type* arr = new Type[Size];
     gen_rand_array(arr, Size);
-    Comparator<Type> comp = [](Type const& a, Type const& b) {return a < b; };
     for (auto const& sort : sorts_array)
-        //test_sort(sort.name, sort.sort_func, arr, Size, Less);
-        //test_sort(sort.name, sort.sort_func, arr, Size, comp);
-        test_sort(sort.name, sort.sort_func, arr, Size);
+        test_sort(sort, arr, Size);
     delete[] arr;
 }
 

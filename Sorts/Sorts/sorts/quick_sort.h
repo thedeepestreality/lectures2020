@@ -5,18 +5,17 @@
 
 template <typename Type>
 size_t quick_sort_partition(Type arr[], 
-                            int l_idx, 
-                            int r_idx, 
-                            Comparator<Type> comp = Greater,
-                            Comparator<Type> eq = Equal)
+                            size_t l_idx, 
+                            size_t r_idx,
+                            Comparator<Type> comp = GreaterOrEqual)
 {
     size_t pivot_idx = (l_idx + r_idx) / 2;
     Type const Pivot = arr[pivot_idx];
     while (l_idx < r_idx)
     {
-        while (GreaterOrEqual(Pivot,arr[l_idx]) && l_idx < pivot_idx)
+        while (comp(Pivot, arr[l_idx]) && l_idx < pivot_idx)
             ++l_idx;
-        while (GreaterOrEqual(arr[r_idx], Pivot) && r_idx > pivot_idx)
+        while (comp(arr[r_idx], Pivot) && r_idx > pivot_idx)
             --r_idx;
         if (l_idx >= r_idx) //!!!
             break;
@@ -32,7 +31,7 @@ size_t quick_sort_partition(Type arr[],
 }
 
 template <typename Type>
-void quick_sort(Type arr[], size_t const Size, Comparator<Type> comp = Greater)
+void quick_sort(Type arr[], size_t const Size, Comparator<Type> comp = GreaterOrEqual)
 {
     if (Size <= 1)
         return;
@@ -43,14 +42,14 @@ void quick_sort(Type arr[], size_t const Size, Comparator<Type> comp = Greater)
         return;
     }
 
-    size_t const Pivot = quick_sort_partition(arr, 0, Size-1, comp);
+    size_t const Pivot = quick_sort_partition(arr, 0, Size - 1, comp);
     quick_sort(arr, Pivot, comp);
     quick_sort(arr + Pivot + 1, Size - Pivot - 1, comp);
 }
 
 //Iterative quick sort
 template <typename Type>
-void quick_sort_iter(Type arr[], size_t const Size, Comparator<Type> comp = Greater)
+void quick_sort_iter(Type arr[], size_t const Size, Comparator<Type> comp = GreaterOrEqual)
 {
     // Create an auxiliary stack 
     size_t* stack = new size_t[Size];
@@ -71,7 +70,7 @@ void quick_sort_iter(Type arr[], size_t const Size, Comparator<Type> comp = Grea
 
         // Set pivot element at its correct position 
         // in sorted array 
-        size_t const Pivot = quick_sort_partition(arr, l_idx, r_idx);
+        size_t const Pivot = quick_sort_partition(arr, l_idx, r_idx, comp);
 
         // If there are elements on left side of pivot, 
         // then push left side to stack 

@@ -18,6 +18,7 @@ struct Sort
 {
     SortFunc<Type> sort_func;
     char const name[32];
+    Comparator<Type> comp = Greater<Type>;
 };
 
 void tic()
