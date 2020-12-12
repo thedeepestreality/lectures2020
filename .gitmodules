@@ -1,0 +1,3 @@
+[submodule "NerdyStuff/SerialPort"]
+	path = NerdyStuff/SerialPort
+	url = https://github.com/manashmandal/SerialPort.git
