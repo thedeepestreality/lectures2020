@@ -48,9 +48,6 @@ void sort_file(const char filename[], size_t const size)
 	int count = 0;
 	int f1_number;
 	int f2_number;
-	//Maximal sequence length
-	//(for output)
-	int max_count = 0;
 
 	while (true)
 	{
@@ -67,8 +64,6 @@ void sort_file(const char filename[], size_t const size)
 			{
 				file_flag = !file_flag;
 				count = 0;
-				if (count > max_count)
-					max_count = count;
 			}
 
 			(file_flag ? f1 : f2) << curr_number << " ";
@@ -85,9 +80,6 @@ void sort_file(const char filename[], size_t const size)
 				return;
 			}
 		}
-
-		if (count > max_count)
-			max_count = count;
 
 		source.close();
 		f1.close();
@@ -129,7 +121,6 @@ void sort_file(const char filename[], size_t const size)
 		f1.close();
 		f2.close();
 
-		//cout << "Current max count: " << maxCount << endl;
 		count = 0;
 	}
 }
@@ -137,12 +128,11 @@ void sort_file(const char filename[], size_t const size)
 int main(int argc, char* argv[])
 {
 	srand(time(NULL));
-	const size_t Size = 1e3;
+	const size_t Size = 2e3;
 
 	if (argc < 3)
 	{
 		std::cout << "Not enough arguments\n";
-		system("pause");
 		return 0;
 	}
 

@@ -10,7 +10,7 @@ void insertion_sort(Type arr[], size_t const Size, Comparator<Type> comp = Great
         size_t idx = Size - iter - 1;
         for (; idx < Size; ++idx)
         {
-            if (arr[idx] < key)
+            if (comp(key, arr[idx]))
                 arr[idx - 1] = arr[idx];
             else
                 break;

@@ -2,11 +2,7 @@
 #include <ctime>
 #include "utils.h"
 #include "sorts.h"
-
-bool Less(double const& a, double const& b)
-{
-    return a < b;
-}
+#include <algorithm>
 
 //just an example on old-fashion
 //time measurement
@@ -115,12 +111,69 @@ void test_qsort_killer()
     std::cout << '\n';
 }
 
+struct Point
+{
+    double x;
+    double y;
+};
+
+void sort_points()
+{
+    const size_t Size = 5;
+    Point pts[Size] = { 
+        {1, 0.5}, 
+        {1, 2}, 
+        {0, 1}, 
+        {-0.5, 0.1}, 
+        {-1, 3} 
+    };
+
+    Point pts_copy[5];
+    copy_array(pts, pts_copy, Size);
+
+    std::cout << "Original:\n";
+    for (size_t idx = 0; idx < Size; ++idx)
+        std::cout << '(' << pts[idx].x << ',' << pts[idx].y << "), ";
+    std::cout << '\n';
+
+    Comparator<Point> norm_comp = [](Point const& p1, Point const& p2) {
+        double norm1 = sqrt(p1.x * p1.x + p1.y * p1.y);
+        double norm2 = sqrt(p2.x * p2.x + p2.y * p2.y);
+        return norm1 > norm2;
+    };
+
+    insertion_sort(pts_copy, Size, norm_comp);
+    std::cout << "Norm sort:\n";
+    for (size_t idx = 0; idx < Size; ++idx)
+        std::cout << '(' << pts_copy[idx].x << ',' << pts_copy[idx].y << "), ";
+    std::cout << '\n';
+
+    Comparator<Point> y_comp = [](Point const& p1, Point const& p2) {
+        return p1.y > p2.y;
+    };
+    copy_array(pts, pts_copy, Size);
+    insertion_sort(pts_copy, Size, y_comp);
+    std::cout << "Y sort:\n";
+    for (size_t idx = 0; idx < Size; ++idx)
+        std::cout << '(' << pts_copy[idx].x << ',' << pts_copy[idx].y << "), ";
+    std::cout << '\n';
+
+    copy_array(pts, pts_copy, Size);
+    std::sort(pts_copy, pts_copy + Size, [](Point p1, Point p2) {return p1.x < p2.x; });
+    std::cout << "X std::sort:\n";
+    for (size_t idx = 0; idx < Size; ++idx)
+        std::cout << '(' << pts_copy[idx].x << ',' << pts_copy[idx].y << "), ";
+    std::cout << '\n';
+}
+
+
 int main()
 {
     srand(time(NULL));
     //test_qsort_killer();
-    test_all_sorts<double>(2'000'000);
+    //test_all_sorts<double>(2'000'000);
     //dummy_test_sort("Quick sort", quick_sort);
     //test_radix();
+    sort_points();
     return 0;
 }
