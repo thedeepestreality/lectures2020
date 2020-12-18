@@ -89,11 +89,11 @@ void quick_sort_killer_pretender(Type Array[], size_t const Size)
 
 
 template <typename Type>
-int find(Type const arr[], size_t const Size, Type const& val)
+int find(Type const arr[], size_t const Size, Type const& Val)
 {
     int val_idx = -1;
     for (size_t idx = 0; idx < Size; ++idx)
-        if (arr[idx] == val)
+        if (arr[idx] == Val)
         {
             val_idx = idx;
             break;
@@ -102,21 +102,38 @@ int find(Type const arr[], size_t const Size, Type const& val)
 }
 
 template <typename Type>
-int binary_search_recursive(Type arr[], size_t const size, Type const& val)
+int binary_search_recursive(Type arr[], size_t const Size, Type const& Val)
 {
-    if (size == 0) 
+    if (Size == 0) 
         return -1;
 
-    int middle = size / 2;
+    int middle = Size / 2;
 
-    if (arr[middle] == val)
+    if (arr[middle] == Val)
         return middle;
 
-    if (arr[middle] > val)
-        return binary_search_recursive(arr, middle, val);
+    if (arr[middle] > Val)
+        return binary_search_recursive(arr, middle, Val);
 
-    int idx = binary_search_recursive(arr + middle + 1, size - middle - 1, val);
+    int idx = binary_search_recursive(arr + middle + 1, Size - middle - 1, Val);
     return idx >= 0 ? middle + 1 + idx : -1;
+}
+
+template <typename Type>
+int binary_search_for_sort(Type arr[], size_t const Size, Type const& Val, Comparator<Type> comp = Greater<Type>)
+{
+    size_t lb = 0;
+    size_t rb = Size - 1;
+    size_t mid = (lb + rb) / 2;
+    while (lb < rb)
+    {
+        if (comp(arr[mid], Val))
+            rb = mid - 1;
+        else
+            lb = mid + 1;
+        mid = (lb + rb) / 2;
+    }
+    return mid;
 }
 
 template <typename Type>
