@@ -39,3 +39,23 @@ void radix_sort(int arr[], size_t const Size, Comparator<int> comp = Greater)
         arr[idx] ^= INT_MIN;
 }
 
+void radix_sort_stable(int arr[], size_t const Size)
+{
+    for (int digit = 0; digit < 32; ++digit)
+    {
+        int mask = (1 << digit);
+        for (size_t iter = 0; iter < Size - 1; ++iter)
+        {
+            int key = arr[iter + 1];
+            int idx = iter;
+            for (; idx >= 0; --idx)
+            {
+                if ((arr[idx] & mask) > (key & mask))
+                    arr[idx + 1] = arr[idx];
+                else
+                    break;
+            }
+            arr[idx + 1] = key;
+        }
+    }
+}
