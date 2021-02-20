@@ -44,7 +44,52 @@ public:
 	{
 		return (*this)*(1/div);
 	}
+
+	Complex& operator=(Complex const& right)
+	{
+		_re = right._re;
+		_im = right._im;
+		return *this;
+	}
+
+	Complex& operator+=(Complex const& right)
+	{
+		_re += right._re;
+		_im += right._im;
+		return *this;
+	}
+
+	Complex& operator++()
+	{
+		++_re;
+		return *this;
+	}
+
+	Complex operator++(int)
+	{
+		Complex tmp = *this;
+		++_re;
+		return tmp;
+	}
+
+	operator double()
+	{
+		return _re;
+	}
 };
+
+std::ostream& operator<<(std::ostream& out, Complex const& obj)
+{
+	return out << obj.real() << "+(" << obj.imag() << ")i";
+}
+
+std::istream& operator>>(std::istream& in, Complex& obj)
+{
+	double re, im;
+	in >> re >> im;
+	obj = Complex(re, im);
+	return in;
+}
 
 Complex Complex::sum(Complex const& right) const
 {
@@ -124,7 +169,14 @@ int main()
 
 	Complex d = a + c;
 
-	(a / c).print();
+	std::cout << (a / c) << '\n';
+
+	Complex in_c;
+	std::cin >> in_c;
+	std::cout << "input: " << (double)in_c << '\n';
+
+	//WARNING! implicit cast!
+	std::cout << sqrt(in_c) << '\n';
 
 	//1+2 <=> operator+(1, 2);
 
