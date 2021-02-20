@@ -59,6 +59,13 @@ public:
 		return *this;
 	}
 
+	Complex& operator*=(Complex const& right)
+	{
+		_re *= right._re;
+		_im *= right._im;
+		return *this;
+	}
+
 	Complex& operator++()
 	{
 		++_re;
@@ -72,7 +79,7 @@ public:
 		return tmp;
 	}
 
-	operator double()
+	explicit operator double()
 	{
 		return _re;
 	}
@@ -149,6 +156,68 @@ bool operator!=(Complex const& a, Complex const& b)
 	return !(a == b);
 }
 
+class ComplexPoly
+{
+private:
+	size_t _size;
+	Complex* _coeffs;
+	void initFromArray(size_t const kSize, Complex* coeffs)
+	{
+		_size = kSize;
+		for (size_t idx = 0; idx < _size; ++idx)
+			_coeffs[idx] = coeffs[idx];
+	}
+public:
+	ComplexPoly(size_t const kSize): _size(kSize),
+									_coeffs(new Complex[_size])
+	{}
+
+	ComplexPoly(size_t const kSize, Complex* coeffs)
+	{
+		initFromArray(kSize, coeffs);
+	}
+
+	// RULE OF THREE:
+	// 1) Copy constructor
+	ComplexPoly(ComplexPoly& const source) : ComplexPoly(source._size, source._coeffs) {}
+
+	// 2) Assignment operator
+	ComplexPoly& operator=(ComplexPoly& const source)
+	{
+		if (_size)
+			delete[] _coeffs;
+
+		initFromArray(source._size, source._coeffs);
+	}
+
+	// 3) Destructor
+	~ComplexPoly()
+	{
+		if (_size)
+			delete[] _coeffs;
+	}
+
+	Complex& operator[](int idx) const
+	{
+		if (idx < 0 || idx >= _size)
+			throw std::exception("index out of bounds");
+		return _coeffs[idx];
+	}
+
+	Complex operator()(Complex const& val)
+	{
+		Complex sum;
+		Complex deg(1);
+		for (size_t idx = 0; idx < _size; ++idx)
+		{
+			sum += _coeffs[_size - idx - 1] * deg;
+			deg *= val;
+		}
+		return sum;
+	}
+};
+
+//DSL = Domain Specific Language
 int main()
 {
 	Complex c(3, 4);
@@ -176,9 +245,18 @@ int main()
 	std::cout << "input: " << (double)in_c << '\n';
 
 	//WARNING! implicit cast!
-	std::cout << sqrt(in_c) << '\n';
+	std::cout << sqrt((double)in_c) << '\n';
 
 	//1+2 <=> operator+(1, 2);
+	//m[1][2] = (m[1])[2]
+
+	ComplexPoly poly(3); //z^2+2*z+1 = (z+1)^2
+	poly[0] = 1;
+	poly[1] = 2;
+	poly[2] = 1;
+
+	std::cout << "poly(1) = " << poly(Complex(1)) << std::endl;
+
 
     return 0;
 }
