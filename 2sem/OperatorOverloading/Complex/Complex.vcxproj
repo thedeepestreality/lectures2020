@@ -139,7 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Complex.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="complex_poly.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="complex.h" />
+    <ClInclude Include="complex_poly.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
