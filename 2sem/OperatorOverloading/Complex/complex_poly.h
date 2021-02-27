@@ -28,8 +28,12 @@ public:
 	ComplexPoly(ComplexPoly const& source) : ComplexPoly(source._size, source._coeffs) {}
 
 	// 2) Assignment operator
+	// ((a = b) = c) = d
 	ComplexPoly& operator=(ComplexPoly const& source)
 	{
+		if (this == &source)
+			return *this;
+
 		if (_size)
 			delete[] _coeffs;
 

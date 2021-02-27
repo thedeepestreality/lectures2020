@@ -39,6 +39,11 @@ int main()
 	poly[1] = 2;
 	poly[2] = 1;
 
+	// Self-assignment
+	// need check for this
+	// in the assignment operator
+	poly = poly;
+
 	std::cout << "poly(1) = " << poly(Complex(1)) << std::endl;
 
     return 0;
