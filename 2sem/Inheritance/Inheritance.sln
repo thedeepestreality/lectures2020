@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Basics", "Basics\Basics.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shapes", "Shapes\Shapes.vcxproj", "{84638253-6027-4BF7-A160-8F520ACAA6CE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Doka3", "Doka3\Doka3.vcxproj", "{FF0EBCD2-2F47-4229-A876-3C8ECD62489D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{84638253-6027-4BF7-A160-8F520ACAA6CE}.Release|x64.Build.0 = Release|x64
 		{84638253-6027-4BF7-A160-8F520ACAA6CE}.Release|x86.ActiveCfg = Release|Win32
 		{84638253-6027-4BF7-A160-8F520ACAA6CE}.Release|x86.Build.0 = Release|Win32
+		{FF0EBCD2-2F47-4229-A876-3C8ECD62489D}.Debug|x64.ActiveCfg = Debug|x64
+		{FF0EBCD2-2F47-4229-A876-3C8ECD62489D}.Debug|x64.Build.0 = Debug|x64
+		{FF0EBCD2-2F47-4229-A876-3C8ECD62489D}.Debug|x86.ActiveCfg = Debug|Win32
+		{FF0EBCD2-2F47-4229-A876-3C8ECD62489D}.Debug|x86.Build.0 = Debug|Win32
+		{FF0EBCD2-2F47-4229-A876-3C8ECD62489D}.Release|x64.ActiveCfg = Release|x64
+		{FF0EBCD2-2F47-4229-A876-3C8ECD62489D}.Release|x64.Build.0 = Release|x64
+		{FF0EBCD2-2F47-4229-A876-3C8ECD62489D}.Release|x86.ActiveCfg = Release|Win32
+		{FF0EBCD2-2F47-4229-A876-3C8ECD62489D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
