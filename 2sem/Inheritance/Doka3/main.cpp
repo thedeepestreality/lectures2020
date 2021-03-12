@@ -33,8 +33,8 @@ public:
         _health = _kBaseHealth;
     }
 
-    virtual void roar() = 0;
-    virtual void status() = 0;
+    virtual void roar() const = 0;
+    virtual void status() const = 0;
 };
 
 class Alien : public Unit
@@ -42,12 +42,12 @@ class Alien : public Unit
 public:
     Alien() : Unit(20, 25) {}
 
-    void roar()
+    void roar() const override
     {
         std::cout << "Alien  roars!\n";
     }
 
-    void status()
+    void status() const override
     {
         std::cout << "Alien's health is " << _health << "\n";
     }
@@ -58,12 +58,12 @@ class Predator : public Unit
 public:
     Predator() : Unit(25, 20) {}
 
-    void roar()
+    void roar() const override
     {
         std::cout << "Predator  roars!\n";
     }
 
-    void status()
+    void status() const override
     {
         std::cout << "Predator's health is " << _health << "\n";
     }
