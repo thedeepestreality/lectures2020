@@ -39,7 +39,7 @@ public:
     ~Circle() { std::cout << "Circle is deleted\n"; }
 };
 
-class Rectangle : public Point
+class Rectangle : virtual public Point
 {
 protected:
     int _width, _height;
@@ -56,12 +56,30 @@ public:
     ~Rectangle() { std::cout << "Rectangle is deleted\n"; }
 };
 
-class Square: public Rectangle
+class Rhombus : virtual public Point
+{
+protected:
+    int _width, _height;
+public:
+    Rhombus(const int kX = 0,
+        const int kY = 0,
+        const int kWidth = 1,
+        const int kHeight = 1) : Point(kX, kY), _width(kWidth), _height(kHeight)
+    {
+        std::cout << "Rhombus is created\n";
+    }
+    void show() const override { std::cout << "Rhombus is shown\n"; }
+    void hide() const override { std::cout << "Rhombus is hidden\n"; }
+    ~Rhombus() { std::cout << "Rhombus is deleted\n"; }
+};
+
+class Square: public Rectangle, public Rhombus
 {
 public:
     Square( const int kX = 0,
             const int kY = 0,
-            const int kSide = 1) : Rectangle(kX, kY, kSide, kSide)
+            const int kSide = 1) : Rectangle(kX, kY, kSide, kSide),
+                                   Rhombus(kX, kY, kSide, kSide)
     {
         std::cout << "Square is created\n";
     }
@@ -73,7 +91,17 @@ public:
 void render(Shape* shapes[], size_t const kSize)
 {
     for (size_t idx = 0; idx < kSize; ++idx)
+    {
+        auto& info = typeid(*shapes[idx]);
+        std::cout << "Type name: " << info.name() << "\n";
+        std::cout << (info == typeid(Circle)) << "\n";
         shapes[idx]->show();
+        Circle* circle_candidate = dynamic_cast<Circle*>(shapes[idx]);
+        if (circle_candidate != nullptr)
+        {
+            std::cout << "Zolotye kupola found!\n";
+        }
+    }
 }
 
 int main()
