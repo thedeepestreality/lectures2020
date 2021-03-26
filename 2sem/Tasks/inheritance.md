@@ -5,4 +5,4 @@
 Написать функцию, принимающую на вход массив указателей на Parallelogram и выводящую центры симметрии всех фигур.
 Написать функцию, принимающую на вход массив указателей на Deltoid и выводящую центры вписанных окружностей всех фигур.
 
-![cannot display](https://github.com/thedeepestreality/lectures2020/tree/master/2sem/Inheritance/Tasks/shapes.png "Shapes hierarchy diagram")
+![cannot display](https://github.com/thedeepestreality/lectures2020/blob/master/2sem/Tasks/shapes.png "Shapes hierarchy diagram")
