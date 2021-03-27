@@ -12,11 +12,9 @@ public:
         Node(Type const& d) : data(d), next(nullptr) {}
     };
 
-    class iterator
+    struct iterator
     {
-    private:
         Node* _node;
-    public:
         iterator(Node* node = nullptr) : _node(node) {}
         Type& operator*() const
         {
@@ -99,11 +97,12 @@ public:
         ++_size;
     }
 
-    void erase(Node* to_die)
+    void erase(iterator to_die_it)
     {
         if (_root == nullptr)
             throw std::runtime_error("empty list");
 
+        Node* to_die = to_die_it._node;
         Node* curr = _root;
         while (curr->next != to_die && curr->next != nullptr)
             curr = curr->next;
