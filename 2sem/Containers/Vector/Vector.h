@@ -12,24 +12,42 @@ private:
     static const double kDefMultiplier = 1.5;
 
 public:
-    ~Vector();
+    ~Vector()
+    {
+        clear();
+    }
     Vector(Vector const& vec) : Vector(vec._data, vec._size) {}
     Vector& operator=(Vector const& vec);
 
     Vector();
-    Vector(size_t capacity);
+    Vector(size_t capacity) : _capacity(capacity)
+    {
+        _size = 0;
+        if (_capacity != 0)
+            _data = ::operator new(_capacity*sizeof(Type));
+    }
+
     Vector(Type* data, size_t size);
 
     Type& operator[](int idx);
-    Type operator[](int idx) const;
+    Type const& operator[](int idx) const;
 
     void push_back(Type& const val);
-    void erase(size_t idx);
-    void insert(Type& const val, size_t idx_after);
+    void erase(Type* to_die);
+    void insert(Type& const val, Type* ptr_after);
 
     void resize(size_t new_size);
-    void clear();
-    bool find(Type& const to_find, Type& result);
+    void clear()
+    {
+        ///TODO: check validity!!!
+        if (_capacity != 0)
+        {
+            for (size_t idx = 0; idx < _size; ++idx)
+                _data[idx].~Type();
+            ::operator delete[](void*)_data;
+        }
+    }
+    Type* find(Type& const to_find);
 };
 
 template <class Type>
@@ -38,8 +56,8 @@ void Vector<Type>::push_back(Type& const val)
     if (_capacity == 0)
     {
         _capacity = kDefCapacity;
-        _data = new Type[_capacity];
-        _data[0] = val;
+        _data = ::operator new(_capacity * sizeof(Type));
+        new(_data) Type(val);
         _size = 1;
         return;
     }
@@ -47,24 +65,29 @@ void Vector<Type>::push_back(Type& const val)
     if (_size == _capacity)
     {
         _capacity *= kDefMultiplier;
-        Type* tmp_data = new Type[_capacity];
+        Type* tmp_data = ::operator new(_capacity * sizeof(Type));
         for (size_t idx = 0; idx < _size; ++_idx)
-            tmp_data[idx] = _data[idx];
-        delete[] _data;
+            new(tmp_data+idx) Type(_data[idx]);
+        clear();
         _data = tmp_data;
     }
 
-    tmp_data[_size++] = val;
+    new(_data + (_size++)) Type(val);
 }
 
 template <class Type>
-void Vector<Type>::erase(size_t erase_idx)
+void Vector<Type>::erase(Type* to_die)
 {
-    if (erase_idx >= _size)
+    int erase_idx = to_die - _data;
+    if (erase_idx >= _size || erase_idx < 0)
         throw std::out_of_range();
 
     for (size_t idx = erase_idx; idx < _size - 1; ++idx)
-        _data[idx] = _data[idx + 1];
+    {
+        _data[idx].~Type();
+        new(_data + idx) Type(_data[idx + 1]);
+    }
+    _data[_size-1].~Type();
 
     --_size;
 }
