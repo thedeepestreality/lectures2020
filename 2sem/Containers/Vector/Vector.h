@@ -12,11 +12,15 @@ private:
     static const double kDefMultiplier() { return 1.5; }
 
 public:
+    struct iterator;
+
     ~Vector()
     {
         clear();
     }
+
     Vector(Vector const& vec) : Vector(vec._data, vec._size) {}
+
     Vector& operator=(Vector const& vec)
     {
         ///TODO: implement
@@ -35,7 +39,7 @@ public:
     }
 
     void push_back(Type const& val);
-    void erase(Type* to_die);
+    
     void clear()
     {
         if (_capacity != 0)
@@ -46,15 +50,19 @@ public:
         }
     }
 
-    ///TODO:
+    ///TODO: implement
 
     //Type& operator[](int idx);
     //Type const& operator[](int idx) const;
 
-    //void insert(Type& const val, Type* ptr_after);
+    //void insert(Type& const val, iterator it_after);
     //void resize(size_t new_size);
 
-    //Type* find(Type& const to_find);
+    //iterator find(Type& const to_find);
+    //void erase(iterator to_die);
+
+    //iterator begin();
+    //iterator end();
 };
 
 template <class Type>
@@ -80,21 +88,4 @@ void Vector<Type>::push_back(Type const& val)
     }
 
     new(_data + (_size++)) Type(val);
-}
-
-template <class Type>
-void Vector<Type>::erase(Type* to_die)
-{
-    int erase_idx = to_die - _data;
-    if (erase_idx >= _size || erase_idx < 0)
-        throw std::out_of_range();
-
-    for (size_t idx = erase_idx; idx < _size - 1; ++idx)
-    {
-        _data[idx].~Type();
-        new(_data + idx) Type(_data[idx + 1]);
-    }
-    _data[_size-1].~Type();
-
-    --_size;
 }
