@@ -47,6 +47,7 @@ public:
             for (size_t idx = 0; idx < _size; ++idx)
                 _data[idx].~Type();
             ::operator delete[](_data);
+            _size = _capacity = 0;
         }
     }
 
@@ -68,7 +69,7 @@ public:
 template <class Type>
 void Vector<Type>::push_back(Type const& val)
 {
-    if (_capacity == 0)
+    if (_capacity <= 1)
     {
         _capacity = kDefCapacity;
         _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
