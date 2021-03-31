@@ -4,8 +4,6 @@
 
 int main()
 {
-    std::list<double>::iterator it;
-    it._Ptr;
     List<int> list;
     list.push_back(3);
     list.push_back(2);
