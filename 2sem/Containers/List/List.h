@@ -1,5 +1,4 @@
 #pragma once
-#include <exception>
 
 template <typename Type>
 class List
@@ -18,8 +17,6 @@ public:
         iterator(Node* node = nullptr) : _node(node) {}
         Type& operator*() const
         {
-            if (!_node)
-                throw std::runtime_error("empty iterator");
             return _node->data;
         }
 
@@ -35,16 +32,12 @@ public:
 
         iterator& operator++()
         {
-            if (!_node)
-                throw std::runtime_error("empty iterator");
             _node = _node->next;
             return *this;
         }
 
         iterator operator++(int)
         {
-            if (!_node)
-                throw std::runtime_error("empty iterator");
             Node* tmp = _node;
             _node = _node->next;
             return iterator(tmp);
