@@ -85,6 +85,9 @@ public:
 
     iterator begin() { return iterator(_root); }
     iterator end() { return iterator(); }
+
+    //iterator begin() const { return const_iterator(_root); }
+    //iterator end() const { return const_iterator(); }
     
     //void push_back(Type const& val);
     //void insert(Type& const val, iterator it_after);

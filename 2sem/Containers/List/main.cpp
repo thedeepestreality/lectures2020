@@ -2,6 +2,14 @@
 #include "List.h"
 #include <list>
 
+//template <typename Type>
+//std::ostream& operator<<(std::ostream& out, List<Type> const& list)
+//{
+//    for (auto it = list.begin(); it != list.end(); ++it)
+//        out << *it << "\n";
+//    return out;
+//}
+
 int main()
 {
     List<int> list;
@@ -12,6 +20,7 @@ int main()
 
     for (auto it = list.begin(); it != list.end(); ++it)
         std::cout << *it << "\n";
+    //std::cout << list;
 
     list.erase(++list.begin());
 

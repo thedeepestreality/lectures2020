@@ -30,7 +30,7 @@ public:
     {
         _size = 0;
         if (_capacity != 0)
-            _data = (Type*)::operator new(_capacity*sizeof(Type));
+            _data = (Type*)(::operator new(_capacity*sizeof(Type)));
     }
 
     Vector(Type* data, size_t size) 
