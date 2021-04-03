@@ -26,16 +26,41 @@ public:
         ///TODO: implement
     }
 
-    Vector(size_t capacity = 0) : _capacity(capacity), _data(nullptr)
+    Vector(size_t size = 0) : _size(size), _capacity(size), _data(nullptr)
     {
-        _size = 0;
+        _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
+        for (size_t idx = 0; idx < _size; ++idx)
+            new(_data + idx) Type;
+    }
+
+    Vector(size_t size, Type const& val) : _size(size), _capacity(size), _data(nullptr)
+    {
         if (_capacity != 0)
-            _data = (Type*)(::operator new(_capacity*sizeof(Type)));
+        {
+            _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
+            for (size_t idx = 0; idx < _size; ++idx)
+                new(_data + idx) Type(val);
+        }
     }
 
     Vector(Type* data, size_t size) 
     {
         ///TODO: implement
+    }
+
+    void reserve(size_t new_capacity)
+    { 
+        if (new_capacity > _capacity)
+        {
+            Type* tmp_data = reinterpret_cast<Type*>(::operator new(new_capacity * sizeof(Type)));
+            for (size_t idx = 0; idx < _size; ++idx)
+                new(tmp_data + idx) Type(_data[idx]);
+            size_t prev_size = _size;
+            clear();
+            _data = tmp_data;
+            _size = prev_size;
+            _capacity = new_capacity;
+        }
     }
 
     void push_back(Type const& val);
