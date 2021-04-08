@@ -15,7 +15,10 @@ int main()
     dict["windows"] = "must die";
     dict["linux"] = "is the best";
 
+    std::cout << "c++: " << dict["c++"] << "\n";
     std::cout << "windows: " << dict["windows"] << "\n";
+    std::cout << "linux: " << dict["linux"] << "\n";
+    std::cout << "???: " << dict["???"] << "\n";
 
     return 0;
 }

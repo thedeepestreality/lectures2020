@@ -47,6 +47,7 @@ public:
 private:
     Node* _root;
     size_t _size;
+    iterator push(Type const& val);
 public:
     List() :_root(nullptr), _size(0) {}
 
@@ -90,20 +91,25 @@ public:
     //iterator end() const { return const_iterator(); }
     
     //void push_back(Type const& val);
-    //void insert(Type& const val, iterator it_after);
+    //void insert(Type const& val, iterator it_after);
     //void resize(size_t new_size);
 
-    iterator find(Type& const to_find);
+    iterator insert(Type const& val)
+    {
+        return push(val);
+    }
+
+    iterator find(Type const& to_find);
 };
 
 template <class Type>
-void List<Type>::push_back(Type const& val)
+typename List<Type>::iterator List<Type>::push(Type const& val)
 {
     if (_root == nullptr)
     {
         _root = new Node(val);
         _size = 1;
-        return;
+        return begin();
     }
 
     Node* curr = _root;
@@ -112,6 +118,13 @@ void List<Type>::push_back(Type const& val)
     Node* new_node = new Node(val);
     curr->next = new_node;
     ++_size;
+    return iterator(new_node);
+}
+
+template <class Type>
+void List<Type>::push_back(Type const& val)
+{
+    push(val);
 }
 
 template <class Type>
@@ -133,19 +146,15 @@ void List<Type>::erase(iterator to_die_it)
 }
 
 template <typename Type>
-typename List<Type>::iterator List<Type>::find(Type& const to_find)
+typename List<Type>::iterator List<Type>::find(Type const& to_find)
 {
     Node* curr = _root;
     while (curr != nullptr)
     {
-        if (curr->_data < to_find)
-            curr = curr->_data->_right;
-        else if (curr->_data > to_find)
-            curr = curr->_data->_left;
+        if (curr->data != to_find)
+            curr = curr->next;
         else
-        {
             return iterator(curr);
-        }
     }
     return end();
 }
