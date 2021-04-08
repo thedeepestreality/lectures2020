@@ -4,11 +4,11 @@
 int main()
 {
     BSTree<int> tree;
-    tree.push(10);
-    tree.push(3);
-    tree.push(5);
-    tree.push(1);
-    tree.push(2);
+    tree.insert(10);
+    tree.insert(3);
+    tree.insert(5);
+    tree.insert(1);
+    tree.insert(2);
 
     tree.print();
 

@@ -6,7 +6,7 @@ struct Pair
     Key _key;
     Value _value;
 
-    Pair(Key const& key, Value const& value = Value()) : _key(key), _value(value) {}
+    Pair(Key const& key = Key(), Value const& value = Value()) : _key(key), _value(value) {}
     Pair(Pair const& pair) : Pair(pair._key, pair._value) {} 
 
     Pair& operator=(Pair const& pair)

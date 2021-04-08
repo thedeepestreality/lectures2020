@@ -12,35 +12,14 @@ private:
     static const double kDefMultiplier() { return 1.5; }
 
 public:
-    struct iterator;
-
-    ~Vector()
-    {
-        clear();
-    }
-
+    Vector(size_t size = 0);
+    Vector(size_t size, Type const& val);
     Vector(Vector const& vec) : Vector(vec._data, vec._size) {}
+    ~Vector() { clear(); }
 
     Vector& operator=(Vector const& vec)
     {
         ///TODO: implement
-    }
-
-    Vector(size_t size = 0) : _size(size), _capacity(size), _data(nullptr)
-    {
-        _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
-        for (size_t idx = 0; idx < _size; ++idx)
-            new(_data + idx) Type;
-    }
-
-    Vector(size_t size, Type const& val) : _size(size), _capacity(size), _data(nullptr)
-    {
-        if (_capacity != 0)
-        {
-            _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
-            for (size_t idx = 0; idx < _size; ++idx)
-                new(_data + idx) Type(val);
-        }
     }
 
     Vector(Type* data, size_t size) 
@@ -48,70 +27,119 @@ public:
         ///TODO: implement
     }
 
-    void reserve(size_t new_capacity)
-    { 
-        if (new_capacity > _capacity)
-        {
-            Type* tmp_data = reinterpret_cast<Type*>(::operator new(new_capacity * sizeof(Type)));
-            for (size_t idx = 0; idx < _size; ++idx)
-                new(tmp_data + idx) Type(_data[idx]);
-            size_t prev_size = _size;
-            clear();
-            _data = tmp_data;
-            _size = prev_size;
-            _capacity = new_capacity;
-        }
-    }
+    void reserve(size_t new_capacity);
+    void clear();
 
-    void push_back(Type const& val);
-    
-    void clear()
+    struct iterator
     {
-        if (_capacity != 0)
+        Type* _element;
+
+        iterator(Type* elem = nullptr) : _element(elem) {}
+        Type& operator*() { return *_element; }
+        Type& operator*() const { return *_element; }
+        bool operator==(const iterator& it) const
         {
-            for (size_t idx = 0; idx < _size; ++idx)
-                _data[idx].~Type();
-            ::operator delete[](_data);
-            _size = _capacity = 0;
+            return _element == it._element;
         }
-    }
+        bool operator!=(const iterator& it) const
+        {
+            return !(*this == it);
+        }
+        iterator& operator++()
+        {
+            ++_element;
+            return *this;
+        }
+        iterator operator++(int)
+        {
+            Type* tmp = _element;
+            ++_element;
+            return iterator(tmp);
+        }
+    };
 
     ///TODO: implement
 
     //Type& operator[](int idx);
     //Type const& operator[](int idx) const;
 
-    //void insert(Type& const val, iterator it_after);
+    iterator push_back(Type const& val);
+
+    iterator insert(Type const& val) { return push_back(val); }
     //void resize(size_t new_size);
 
-    //iterator find(Type& const to_find);
+    iterator find(Type const& to_find);
     //void erase(iterator to_die);
 
-    //iterator begin();
-    //iterator end();
+    iterator begin() { return iterator(_data); }
+    iterator end() { return iterator(); }
 };
 
 template <class Type>
-void Vector<Type>::push_back(Type const& val)
+Vector<Type>::Vector(size_t size) : _size(size), _capacity(size), _data(nullptr)
 {
-    if (_capacity <= 1)
-    {
-        _capacity = kDefCapacity;
-        _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
-        new(_data) Type(val);
-        _size = 1;
-        return;
-    }
+    _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
+    for (size_t idx = 0; idx < _size; ++idx)
+        new(_data + idx) Type;
+}
 
-    if (_size == _capacity)
+template <class Type>
+Vector<Type>::Vector(size_t size, Type const& val) : _size(size), _capacity(size), _data(nullptr)
+{
+    if (_capacity != 0)
     {
-        _capacity *= kDefMultiplier();
-        Type* tmp_data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
+        _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
         for (size_t idx = 0; idx < _size; ++idx)
-            new(tmp_data+idx) Type(_data[idx]);
+            new(_data + idx) Type(val);
+    }
+}
+
+template <class Type>
+void Vector<Type>::reserve(size_t new_capacity)
+{
+    if (new_capacity > _capacity)
+    {
+        Type* tmp_data = reinterpret_cast<Type*>(::operator new(new_capacity * sizeof(Type)));
+        for (size_t idx = 0; idx < _size; ++idx)
+            new(tmp_data + idx) Type(_data[idx]);
+        size_t prev_size = _size;
         clear();
         _data = tmp_data;
+        _size = prev_size;
+        _capacity = new_capacity;
+    }
+}
+
+template <class Type>
+typename Vector<Type>::iterator Vector<Type>::push_back(Type const& val)
+{
+    if (_size == _capacity)
+    {
+        size_t safe_capacity = _capacity <= 1 ? kDefCapacity : _capacity;
+        reserve(safe_capacity * kDefMultiplier());
     }
 
     new(_data + (_size++)) Type(val);
+    return iterator(_data+(_size-1));
+}
+
+template <class Type>
+void Vector<Type>::clear()
+{
+    if (_capacity != 0)
+    {
+        for (size_t idx = 0; idx < _size; ++idx)
+            _data[idx].~Type();
+        ::operator delete[](_data);
+        _size = _capacity = 0;
+    }
+}
+
+template <class Type>
+typename Vector<Type>::iterator Vector<Type>::find(Type const& to_find)
+{
+    for (size_t idx = 0; idx < _size; ++idx)
+        if (_data[idx] == to_find)
+            return iterator(_data + idx);
+    return end();
 }
