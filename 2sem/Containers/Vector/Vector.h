@@ -28,9 +28,12 @@ public:
 
     Vector(size_t size = 0) : _size(size), _capacity(size), _data(nullptr)
     {
-        _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
-        for (size_t idx = 0; idx < _size; ++idx)
-            new(_data + idx) Type;
+        if (_capacity > 0)
+        {
+            _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
+            for (size_t idx = 0; idx < _size; ++idx)
+                new(_data + idx) Type();
+        }
     }
 
     Vector(size_t size, Type const& val) : _size(size), _capacity(size), _data(nullptr)
