@@ -93,7 +93,7 @@ public:
     //void insert(Type& const val, iterator it_after);
     //void resize(size_t new_size);
 
-    //iterator find(Type& const to_find);
+    iterator find(Type& const to_find);
 };
 
 template <class Type>
@@ -130,4 +130,22 @@ void List<Type>::erase(iterator to_die_it)
         curr->next = to_die->next;
         delete to_die;
     }
+}
+
+template <typename Type>
+typename List<Type>::iterator List<Type>::find(Type& const to_find)
+{
+    Node* curr = _root;
+    while (curr != nullptr)
+    {
+        if (curr->_data < to_find)
+            curr = curr->_data->_right;
+        else if (curr->_data > to_find)
+            curr = curr->_data->_left;
+        else
+        {
+            return iterator(curr);
+        }
+    }
+    return end();
 }
