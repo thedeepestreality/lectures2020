@@ -29,41 +29,18 @@ public:
     Vector(size_t size = 0) : _size(size), _capacity(size), _data(nullptr)
     {
         if (_capacity > 0)
-        {
-            _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
-            for (size_t idx = 0; idx < _size; ++idx)
-                new(_data + idx) Type();
-        }
+            _data = new Type[_capacity];
     }
 
-    Vector(size_t size, Type const& val) : _size(size), _capacity(size), _data(nullptr)
+    Vector(size_t size, Type const& val) : Vector(size)
     {
-        if (_capacity != 0)
-        {
-            _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
-            for (size_t idx = 0; idx < _size; ++idx)
-                new(_data + idx) Type(val);
-        }
+        for (size_t idx = 0; idx < _size; ++idx)
+            _data[idx] = val;
     }
 
     Vector(Type* data, size_t size) 
     {
         ///TODO: implement
-    }
-
-    void reserve(size_t new_capacity)
-    { 
-        if (new_capacity > _capacity)
-        {
-            Type* tmp_data = reinterpret_cast<Type*>(::operator new(new_capacity * sizeof(Type)));
-            for (size_t idx = 0; idx < _size; ++idx)
-                new(tmp_data + idx) Type(_data[idx]);
-            size_t prev_size = _size;
-            clear();
-            _data = tmp_data;
-            _size = prev_size;
-            _capacity = new_capacity;
-        }
     }
 
     void push_back(Type const& val);
@@ -72,9 +49,7 @@ public:
     {
         if (_capacity != 0)
         {
-            for (size_t idx = 0; idx < _size; ++idx)
-                _data[idx].~Type();
-            ::operator delete[](_data);
+            delete[] _data;
             _size = _capacity = 0;
         }
     }
@@ -100,8 +75,8 @@ void Vector<Type>::push_back(Type const& val)
     if (_capacity <= 1)
     {
         _capacity = kDefCapacity;
-        _data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
-        new(_data) Type(val);
+        _data = new Type[_capacity];
+        _data[0] = val;
         _size = 1;
         return;
     }
@@ -109,12 +84,12 @@ void Vector<Type>::push_back(Type const& val)
     if (_size == _capacity)
     {
         _capacity *= kDefMultiplier();
-        Type* tmp_data = reinterpret_cast<Type*>(::operator new(_capacity * sizeof(Type)));
+        Type* tmp_data = new Type[_capacity];
         for (size_t idx = 0; idx < _size; ++idx)
-            new(tmp_data+idx) Type(_data[idx]);
+            tmp_data[idx] = _data[idx];
         clear();
         _data = tmp_data;
     }
 
-    new(_data + (_size++)) Type(val);
+    _data[_size++] = val;
 }

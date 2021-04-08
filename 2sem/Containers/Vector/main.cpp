@@ -8,9 +8,7 @@ struct Test {
 
 int main()
 {
-    Vector<Test> vec(3);
-   // vec.push_back(Test());
-    vec.reserve(5);
+    Vector<Test> vec;
     vec.push_back(Test());
 
     return 0;
