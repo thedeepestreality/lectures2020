@@ -12,8 +12,6 @@ private:
     static const double kDefMultiplier() { return 1.5; }
 
 public:
-    struct iterator;
-
     ~Vector()
     {
         clear();
@@ -43,7 +41,35 @@ public:
         ///TODO: implement
     }
 
-    void push_back(Type const& val);
+    struct iterator
+    {
+        Type* _element;
+
+        iterator(Type* elem = nullptr) : _element(elem) {}
+        Type& operator*() { return *_element; }
+        Type& operator*() const { return *_element; }
+        bool operator==(const iterator& it) const
+        {
+            return _element == it._element;
+        }
+        bool operator!=(const iterator& it) const
+        {
+            return !(*this == it);
+        }
+        iterator& operator++()
+        {
+            ++_element;
+            return *this;
+        }
+        iterator operator++(int)
+        {
+            Type* tmp = _element;
+            ++_element;
+            return iterator(tmp);
+        }
+    };
+
+    iterator push_back(Type const& val);
     
     void clear()
     {
@@ -59,37 +85,39 @@ public:
     //Type& operator[](int idx);
     //Type const& operator[](int idx) const;
 
-    //void insert(Type& const val, iterator it_after);
+    iterator insert(Type const& val) { return push_back(val); }
     //void resize(size_t new_size);
 
-    //iterator find(Type& const to_find);
-    //void erase(iterator to_die);
+    iterator find(Type const& to_find);
+    //iterator erase(iterator to_die);
 
-    //iterator begin();
-    //iterator end();
+    iterator begin() { return iterator(_data); }
+    iterator end() { return iterator(_data + _size); }
 };
 
 template <class Type>
-void Vector<Type>::push_back(Type const& val)
+typename Vector<Type>::iterator Vector<Type>::push_back(Type const& val)
 {
-    if (_capacity <= 1)
-    {
-        _capacity = kDefCapacity;
-        _data = new Type[_capacity];
-        _data[0] = val;
-        _size = 1;
-        return;
-    }
-
     if (_size == _capacity)
     {
-        _capacity *= kDefMultiplier();
-        Type* tmp_data = new Type[_capacity];
-        for (size_t idx = 0; idx < _size; ++idx)
+        size_t safe_capacity = _capacity <= 1 ? kDefCapacity : _capacity;
+        size_t new_capacity = safe_capacity * kDefMultiplier();
+        Type* tmp_data = new Type[new_capacity];
+        for (size_t idx = 0; idx < _size; ++_size)
             tmp_data[idx] = _data[idx];
-        clear();
+        delete[] _data;
+        _capacity = new_capacity;
         _data = tmp_data;
     }
-
     _data[_size++] = val;
+    return iterator(_data + _size - 1);
+}
+
+template <class Type>
+typename Vector<Type>::iterator Vector<Type>::find(Type const& to_find)
+{
+    for (size_t idx = 0; idx < _size; ++idx)
+        if (_data[idx] == to_find)
+            return iterator(_data+idx);
+    return end();
 }

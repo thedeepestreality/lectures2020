@@ -5,7 +5,7 @@
 #include "../Vector/Vector.h"
 #include "../List/List.h"
 
-typedef Dictionary<String, String, List> Dict;
+typedef Dictionary<String, String, Vector> Dict;
 
 int main()
 {

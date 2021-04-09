@@ -1,15 +1,17 @@
 #include <iostream>
 #include "Vector.h"
-
-struct Test {
-    Test() { std::cout << "Hello!\n"; }
-    ~Test() { std::cout << "Goodbye!\n"; }
-};
+#include <vector>
 
 int main()
 {
-    Vector<Test> vec;
-    vec.push_back(Test());
+    Vector<int> v;
+    v.push_back(1);
+    v.push_back(2);
+    v.push_back(3);
+    v.push_back(4);
+
+    for (auto const& val : v)
+        std::cout << val << "\n";
 
     return 0;
 }
