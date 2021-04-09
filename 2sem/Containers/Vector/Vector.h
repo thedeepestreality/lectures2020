@@ -122,3 +122,72 @@ typename Vector<Type>::iterator Vector<Type>::find(Type const& to_find)
             return iterator(_data+idx);
     return end();
 }
+
+//------------------------------------
+
+template <>
+class Vector<bool>
+{
+private:
+    typedef unsigned char byte;
+    size_t _size;
+    size_t _capacity;
+    size_t _byte_size;
+    byte* _data;
+public:
+    Vector(size_t capacity = 0) : _size(0),
+        _capacity(capacity),
+        _byte_size(0),
+        _data(nullptr)
+    {
+        if (capacity > 0)
+            _data = new byte[capacity / 8 + (capacity % 8 != 0)];
+    }
+
+    class VecProxy
+    {
+        size_t _idx;
+        byte* _vec_ptr;
+    public:
+        VecProxy(size_t idx, byte* vecPtr) : _idx(idx), _vec_ptr(vecPtr) {}
+        VecProxy& operator=(bool val)
+        {
+            size_t char_idx = _idx / 8;
+            size_t bit_idx = _idx % 8;
+            if (val)
+                _vec_ptr[char_idx] |= 1 << bit_idx;
+            else
+                _vec_ptr[char_idx] &= ~(1 << bit_idx);
+            return *this;
+        }
+
+        operator bool()
+        {
+            size_t char_idx = _idx / 8;
+            size_t bit_idx = _idx % 8;
+            return (_vec_ptr[char_idx] >> char_idx) & 0x01;
+        }
+    };
+
+    VecProxy operator[](size_t idx)
+    {
+        return VecProxy(idx, _data);
+    }
+
+    Vector& push_back(bool val)
+    {
+        if (_size == _capacity)
+        {
+            _capacity = _capacity < 8 ? 8 : _capacity * 2;
+            _byte_size = _size / 8 + (_size % 8 != 0);
+            byte* tmp = new byte[_capacity / 8 + (_capacity % 8 != 0)];
+            for (size_t i = 0; i < _byte_size; ++i)
+                tmp[i] = _data[i];
+            if (!_data)
+                delete[] _data;
+            _data = tmp;
+        }
+        VecProxy(_size++, _data) = val;
+        return *this;
+    }
+};
