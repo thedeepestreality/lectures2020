@@ -133,14 +133,6 @@ private:
     size_t _size;
     size_t _capacity;
     byte* _data;
-public:
-    Vector(size_t capacity = 0) : _size(0),
-        _capacity(capacity),
-        _data(nullptr)
-    {
-        if (capacity > 0)
-            _data = new byte[capacity / 8 + (capacity % 8 != 0)];
-    }
 
     class VecProxy
     {
@@ -166,6 +158,15 @@ public:
             return (_vec_ptr[char_idx] >> bit_idx) & 0x01;
         }
     };
+
+public:
+    Vector(size_t capacity = 0) : _size(0),
+        _capacity(capacity),
+        _data(nullptr)
+    {
+        if (capacity > 0)
+            _data = new byte[capacity / 8 + (capacity % 8 != 0)];
+    }
 
     size_t size() const
     {
