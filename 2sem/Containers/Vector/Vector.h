@@ -24,7 +24,7 @@ public:
         ///TODO: implement
     }
 
-    Vector(size_t size = 0) : _size(size), _capacity(size), _data(nullptr)
+    Vector(size_t capacity = 0) : _size(0), _capacity(capacity), _data(nullptr)
     {
         if (_capacity > 0)
             _data = new Type[_capacity];
