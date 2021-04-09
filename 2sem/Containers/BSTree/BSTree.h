@@ -12,9 +12,9 @@ private:
         Node* _right;
         Type _data;
         Node(Type const& data) :_parent(nullptr),
-                                _left(nullptr),
-                                _right(nullptr),
-                                _data(data)
+            _left(nullptr),
+            _right(nullptr),
+            _data(data)
         {}
 
         ~Node()
@@ -46,12 +46,19 @@ private:
             }
             return par;
         }
+
+        size_t height() const
+        {
+            size_t left_h = (_left == nullptr) ? 0 : _left->height();
+            size_t right_h = (_right == nullptr) ? 0 : _right->height();
+            return left_h < right_h ? right_h + 1 : left_h + 1;
+        }
     };
     Node* _root;
     size_t _size;
 public:
-    BSTree() :  _root(nullptr),
-                _size(0)
+    BSTree() : _root(nullptr),
+        _size(0)
     {}
     ~BSTree()
     {
@@ -66,33 +73,64 @@ public:
         ///TODO: implement
     }
 
-    void push(Type const& val);
-    void clear()
-    {
-        _size = 0;
-        if (_root)
-            delete _root;
-        _root = nullptr;
-    }
+    void clear();
+    void print() const;
+    size_t height() const { return _root == nullptr ? 0 : _root->height(); }
 
-    void print()
+    struct iterator
     {
-        if (_root == nullptr)
-            return;
-        for (Node* curr = _root->minimum(); curr != nullptr; curr = curr->next())
-            std::cout << curr->_data << " ";
-        std::cout << "\n";
-    }
+        Node* _curr;
+        iterator(Node* curr = nullptr) : _curr(curr) {}
+        Type& operator*() const { return _curr->_data; }
+        bool operator==(iterator const& it) const { return _curr == it._curr; }
+        bool operator!=(iterator const& it) const { return !(*this == it); }
+        iterator& operator++()
+        {
+            _curr = _curr->next();
+            return *this;
+        }
+        iterator operator++(int)
+        {
+            Node* prev = _curr;
+            _curr = _curr->next();
+            return iterator(prev);
+        }
+    };
+
+    iterator begin() { return iterator(_root); }
+    iterator end() { return iterator(); }
+
+    iterator insert(Type const& val);
+    iterator find(Type const& to_find);
 };
 
 template <typename Type>
-void BSTree<Type>::push(Type const& val)
+void BSTree<Type>::print() const
+{
+    if (_root == nullptr)
+        return;
+    for (Node* curr = _root->minimum(); curr != nullptr; curr = curr->next())
+        std::cout << curr->_data << " ";
+    std::cout << "\n";
+}
+
+template <typename Type>
+void BSTree<Type>::clear()
+{
+    _size = 0;
+    if (_root)
+        delete _root;
+    _root = nullptr;
+}
+
+template <typename Type>
+typename BSTree<Type>::iterator BSTree<Type>::insert(Type const& val)
 {
     ++_size;
     if (_root == nullptr)
     {
         _root = new Node(val);
-        return;
+        return begin();
     }
     Node* curr = _root;
     Node* par;
@@ -110,4 +148,21 @@ void BSTree<Type>::push(Type const& val)
         par->_left = curr;
     else
         par->_right = curr;
+    return iterator(curr);
+}
+
+template <typename Type>
+typename BSTree<Type>::iterator BSTree<Type>::find(Type const& to_find)
+{
+    Node* curr = _root;
+    while (curr != nullptr)
+    {
+        if (curr->_data < to_find)
+            curr = curr->_right;
+        else if (curr->_data > to_find)
+            curr = curr->_left;
+        else
+            return iterator(curr);
+    }
+    return end();
 }

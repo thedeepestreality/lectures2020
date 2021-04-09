@@ -24,5 +24,12 @@ int main()
         std::cout << vec_bool[idx] << " ";
     std::cout << "\n";
 
+    vec_bool[1] = 1;
+    vec_bool[2] = 0;
+
+    for (size_t idx = 0; idx < vec_bool.size(); ++idx)
+        std::cout << vec_bool[idx] << " ";
+    std::cout << "\n";
+
     return 0;
 }

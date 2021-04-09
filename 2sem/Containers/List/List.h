@@ -47,17 +47,16 @@ public:
 private:
     Node* _root;
     size_t _size;
-    iterator push(Type const& val);
 public:
     List() :_root(nullptr), _size(0) {}
 
-    List(Type* data, size_t size) 
+    List(Type* data, size_t size)
     {
         ///TODO: implement
     }
 
-    List(List const& source) 
-    { 
+    List(List const& source)
+    {
         ///TODO: implement
     }
 
@@ -81,7 +80,7 @@ public:
         clear();
     }
 
-    void push_back(Type const& val);
+    iterator push_back(Type const& val);
     void erase(iterator to_die_it);
 
     iterator begin() { return iterator(_root); }
@@ -89,21 +88,21 @@ public:
 
     //iterator begin() const { return const_iterator(_root); }
     //iterator end() const { return const_iterator(); }
-    
+
     //void push_back(Type const& val);
     //void insert(Type const& val, iterator it_after);
     //void resize(size_t new_size);
 
     iterator insert(Type const& val)
     {
-        return push(val);
+        return push_back(val);
     }
 
     iterator find(Type const& to_find);
 };
 
 template <class Type>
-typename List<Type>::iterator List<Type>::push(Type const& val)
+typename List<Type>::iterator List<Type>::push_back(Type const& val)
 {
     if (_root == nullptr)
     {
@@ -119,12 +118,6 @@ typename List<Type>::iterator List<Type>::push(Type const& val)
     curr->next = new_node;
     ++_size;
     return iterator(new_node);
-}
-
-template <class Type>
-void List<Type>::push_back(Type const& val)
-{
-    push(val);
 }
 
 template <class Type>

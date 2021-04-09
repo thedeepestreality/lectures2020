@@ -1,11 +1,12 @@
 #include <iostream>
 #include "Dictionary.h"
-#include "../BSTree/BSTree.h"
 #include "../String/String.h"
 #include "../Vector/Vector.h"
 #include "../List/List.h"
+#include "../BSTree/BSTree.h"
+#include "../AVLTree/AVLTree.h"
 
-typedef Dictionary<String, String, Vector> Dict;
+typedef Dictionary<String, String, AVLTree> Dict;
 
 int main()
 {

@@ -1,9 +1,9 @@
 #include <iostream>
-#include "BSTree.h"
+#include "AVLTree.h"
 
 int main()
 {
-    BSTree<int> tree;
+    AVLTree<int> tree;
     tree.insert(5);
     tree.insert(4);
     tree.insert(3);
@@ -12,7 +12,7 @@ int main()
 
     tree.print();
 
-    std::cout << "BSTree height: " << tree.height() << "\n";
+    std::cout << "AVLTree height: " << tree.height() << "\n";
 
     return 0;
 }
