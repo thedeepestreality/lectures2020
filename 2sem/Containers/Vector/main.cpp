@@ -11,7 +11,18 @@ int main()
     v.push_back(4);
 
     for (auto const& val : v)
-        std::cout << val << "\n";
+        std::cout << val << " ";
+    std::cout << "\n";
+
+    Vector<bool> vec_bool;
+    vec_bool.push_back(1);
+    vec_bool.push_back(0);
+    vec_bool.push_back(1);
+    vec_bool.push_back(1);
+
+    for (size_t idx = 0; idx < vec_bool.size(); ++idx)
+        std::cout << vec_bool[idx] << " ";
+    std::cout << "\n";
 
     return 0;
 }

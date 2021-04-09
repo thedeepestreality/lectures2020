@@ -132,12 +132,10 @@ private:
     typedef unsigned char byte;
     size_t _size;
     size_t _capacity;
-    size_t _byte_size;
     byte* _data;
 public:
     Vector(size_t capacity = 0) : _size(0),
         _capacity(capacity),
-        _byte_size(0),
         _data(nullptr)
     {
         if (capacity > 0)
@@ -165,29 +163,34 @@ public:
         {
             size_t char_idx = _idx / 8;
             size_t bit_idx = _idx % 8;
-            return (_vec_ptr[char_idx] >> char_idx) & 0x01;
+            return (_vec_ptr[char_idx] >> bit_idx) & 0x01;
         }
     };
+
+    size_t size() const
+    {
+        return _size;
+    }
 
     VecProxy operator[](size_t idx)
     {
         return VecProxy(idx, _data);
     }
 
-    Vector& push_back(bool val)
+    void push_back(bool val)
     {
         if (_size == _capacity)
         {
             _capacity = _capacity < 8 ? 8 : _capacity * 2;
-            _byte_size = _size / 8 + (_size % 8 != 0);
-            byte* tmp = new byte[_capacity / 8 + (_capacity % 8 != 0)];
-            for (size_t i = 0; i < _byte_size; ++i)
+            size_t byte_capacity = _capacity / 8 + (_capacity % 8 != 0);
+            byte* tmp = new byte[byte_capacity]();
+            size_t old_byte_size = _size / 8 + (_size % 8 != 0);
+            for (size_t i = 0; i < old_byte_size; ++i)
                 tmp[i] = _data[i];
             if (!_data)
                 delete[] _data;
             _data = tmp;
         }
         VecProxy(_size++, _data) = val;
-        return *this;
     }
 };
