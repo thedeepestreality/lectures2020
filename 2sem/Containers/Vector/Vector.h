@@ -105,7 +105,8 @@ typename Vector<Type>::iterator Vector<Type>::push_back(Type const& val)
         Type* tmp_data = new Type[new_capacity];
         for (size_t idx = 0; idx < _size; ++_size)
             tmp_data[idx] = _data[idx];
-        delete[] _data;
+        if (!_data)
+            delete[] _data;
         _capacity = new_capacity;
         _data = tmp_data;
     }
