@@ -218,7 +218,7 @@ typename BSTree<Type>::iterator BSTree<Type>::erase(iterator pos)
             replace->setRight(to_erase->right);
         }
         // anyway, link replace with left of the erased
-        replace->setLeft(to_erase->left)
+        replace->setLeft(to_erase->left);
     }
 
     // if we erased root -- change the root
