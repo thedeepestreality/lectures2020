@@ -24,11 +24,11 @@ int main()
     Dict dict;
     clock_t start = clock();
     size_t counter = 0;
-    while (++counter < 10000)//(!in.eof())
+    Pair<String, String> curr_word;
+    while (++counter<5000)//(!in.eof())
     {
-        Pair<String, String> curr_word;
         in >> curr_word;
-        dict[curr_word._key] = curr_word._value;
+        dict.insert(curr_word);
     }
     std::cout << "Elapsed: " << 1000 * (double)(clock() - start) / CLOCKS_PER_SEC << "\n";
 

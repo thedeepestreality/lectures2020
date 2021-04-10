@@ -26,6 +26,11 @@ public:
         }
         return (*found)._value;
     }
+
+    void insert(Pair<Key, Value> const& p)
+    {
+        _container.insert(p);
+    }
 };
 
 
