@@ -163,25 +163,25 @@ void AVLTree<Type>::rebalance(Node* sub_root)
 		switch (sub_root->balance())
 		{
 			//right disbalance
-		case 2:
-		{
-			//right-left situation
-			if (sub_root->right->balance() == -1)
-				rotate(sub_root->right, Direction::Right);
-			//right-right
-			sub_root = rotate(sub_root, Direction::Left);
-			break;
-		}
-		//left disbalance
-		case -2:
-		{
-			//left-right situation
-			if (sub_root->left->balance() == 1)
-				rotate(sub_root->left, Direction::Left);
-			//left-left
-			sub_root = rotate(sub_root, Direction::Right);
-			break;
-		}
+			case 2:
+			{
+				//right-left situation
+				if (sub_root->right->balance() == -1)
+					rotate(sub_root->right, Direction::Right);
+				//right-right
+				sub_root = rotate(sub_root, Direction::Left);
+				break;
+			}
+			//left disbalance
+			case -2:
+			{
+				//left-right situation
+				if (sub_root->left->balance() == 1)
+					rotate(sub_root->left, Direction::Left);
+				//left-left
+				sub_root = rotate(sub_root, Direction::Right);
+				break;
+			}
 		}
 		if (sub_root->parent == nullptr)
 			_root = sub_root;

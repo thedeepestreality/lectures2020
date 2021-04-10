@@ -102,6 +102,8 @@ public:
 
     iterator insert(Type const& val);
     iterator find(Type const& to_find);
+
+    iterator erase(iterator pos);
 };
 
 template <typename Type>
@@ -165,4 +167,48 @@ typename BSTree<Type>::iterator BSTree<Type>::find(Type const& to_find)
             return iterator(curr);
     }
     return end();
+}
+
+template<typename Type>
+typename BSTree<Type>::iterator BSTree<Type>::erase(iterator pos)
+{
+    Node* to_erase = pos._node;
+    if (to_erase == nullptr) return pos;
+
+    Node* replace;
+    if (to_erase->left == nullptr)
+        replace = to_erase->right;
+    else if (to_erase->right == nullptr)
+        replace = to_erase->left;
+    else
+    {
+        replace = to_erase->right->minimum();
+        if (replace->parent != to_erase)
+        {
+            replace->parent->left = replace->right;
+            if (replace->right) replace->right->parent = replace->parent;
+            replace->right = to_erase->right;
+            to_erase->right->parent = replace;
+        }
+        replace->left = to_erase->left;
+        to_erase->left->parent = replace;
+    }
+
+    if (to_erase->parent == nullptr)
+        _root = replace;
+    else
+    {
+        if (to_erase->parent->left == to_erase)
+            to_erase->parent->left = replace;
+        else
+            to_erase->parent->right = replace;
+    }
+
+    if (replace != nullptr) replace->parent = to_erase->parent;
+
+    to_erase->right = to_erase->left = nullptr;
+    delete to_erase;
+    --_size;
+
+    return iterator(replace);
 }
