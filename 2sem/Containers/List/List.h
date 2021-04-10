@@ -99,6 +99,8 @@ public:
     }
 
     iterator find(Type const& to_find);
+
+    size_t size() const { return _size; }
 };
 
 template <class Type>

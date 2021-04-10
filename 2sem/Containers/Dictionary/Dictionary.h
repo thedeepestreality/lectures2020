@@ -10,6 +10,11 @@ private:
     Container<Pair<Key, Value>> _container;
 public:
     Dictionary() = default;
+
+    size_t size() const
+    {
+        return _container.size();
+    }
      
     Value& operator[](Key const& key)
     {

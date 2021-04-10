@@ -79,6 +79,7 @@ public:
     { 
         return _root == nullptr ? 0 : _root->height(); 
     }
+    size_t size() const { return _size; }
 
     struct iterator
     {

@@ -94,6 +94,7 @@ public:
     iterator begin() { return iterator(_data); }
     iterator end() { return iterator(_data + _size); }
 
+    size_t size() const { return _size; }
 };
 
 template <class Type>
