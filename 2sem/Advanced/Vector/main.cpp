@@ -8,7 +8,7 @@ struct Test {
 
 int main()
 {
-    Vector<Test> vec(3);
+    Advanced::Vector<Test> vec(3);
    // vec.push_back(Test());
     vec.reserve(5);
     vec.push_back(Test());

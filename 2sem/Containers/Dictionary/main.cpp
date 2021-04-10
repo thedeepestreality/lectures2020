@@ -6,6 +6,7 @@
 #include "../List/List.h"
 #include "../BSTree/BSTree.h"
 #include "../AVLTree/AVLTree.h"
+#include "../../Advanced/Vector/Vector.h"
 #include <ctime>
 
 typedef Dictionary<String, String, List> Dict;
@@ -25,7 +26,7 @@ int main()
     clock_t start = clock();
     size_t counter = 0;
     Pair<String, String> curr_word;
-    while (++counter<5000)//(!in.eof())
+    while (++counter < 20000)//(!in.eof())
     {
         in >> curr_word;
         dict.insert(curr_word);

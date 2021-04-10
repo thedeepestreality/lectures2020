@@ -46,9 +46,10 @@ public:
 
 private:
     Node* _root;
+    Node* _last;
     size_t _size;
 public:
-    List() :_root(nullptr), _size(0) {}
+    List() :_root(nullptr), _last(nullptr), _size(0) {}
 
     List(Type* data, size_t size)
     {
@@ -73,6 +74,7 @@ public:
             _root = _root->next;
             delete tmp;
         }
+        _last = nullptr;
         _size = 0;
     }
     ~List()
@@ -108,18 +110,16 @@ typename List<Type>::iterator List<Type>::push_back(Type const& val)
 {
     if (_root == nullptr)
     {
-        _root = new Node(val);
+        _root = _last = new Node(val);
         _size = 1;
         return begin();
     }
 
-    Node* curr = _root;
-    while (curr->next != nullptr)
-        curr = curr->next;
     Node* new_node = new Node(val);
-    curr->next = new_node;
+    _last->next = new_node;
+    _last = new_node;
     ++_size;
-    return iterator(new_node);
+    return iterator(_last);
 }
 
 template <class Type>
@@ -135,6 +135,10 @@ void List<Type>::erase(iterator to_die_it)
 
     if (curr->next != nullptr)
     {
+        if (to_die == _last)
+            _last = curr;
+        if (to_die == _root)
+            _root = curr->next;
         curr->next = to_die->next;
         delete to_die;
     }
