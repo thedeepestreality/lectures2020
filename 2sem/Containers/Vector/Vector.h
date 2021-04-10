@@ -93,6 +93,7 @@ public:
 
     iterator begin() { return iterator(_data); }
     iterator end() { return iterator(_data + _size); }
+
 };
 
 template <class Type>

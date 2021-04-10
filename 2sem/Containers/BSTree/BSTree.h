@@ -75,7 +75,10 @@ public:
 
     void clear();
     void print() const;
-    size_t height() const { return _root == nullptr ? 0 : _root->height(); }
+    size_t height() const 
+    { 
+        return _root == nullptr ? 0 : _root->height(); 
+    }
 
     struct iterator
     {
