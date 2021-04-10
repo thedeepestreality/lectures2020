@@ -53,7 +53,22 @@ private:
             size_t right_h = (_right == nullptr) ? 0 : _right->height();
             return left_h < right_h ? right_h + 1 : left_h + 1;
         }
+
+        void setLeft(Node* left)
+        {
+            _left = left;
+            if (left != nullptr)
+                left->_parent = this;
+        }
+
+        void setRight(Node* right)
+        {
+            _right = right;
+            if (right != nullptr)
+                right->_parent = this;
+        }
     };
+
     Node* _root;
     size_t _size;
 public:
@@ -176,42 +191,53 @@ typename BSTree<Type>::iterator BSTree<Type>::find(Type const& to_find)
 template<typename Type>
 typename BSTree<Type>::iterator BSTree<Type>::erase(iterator pos)
 {
+    // doomed node pointer
     Node* to_erase = pos._node;
-    if (to_erase == nullptr) return pos;
 
+    // if empty node, do nothing
+    if (to_erase == nullptr)
+        return pos;
+
+    // find the node to replace doomed one
     Node* replace;
+    // node has only one or no children
     if (to_erase->left == nullptr)
         replace = to_erase->right;
     else if (to_erase->right == nullptr)
         replace = to_erase->left;
+    // node has both children
     else
     {
         replace = to_erase->right->minimum();
+        // if replacement is not direct child
         if (replace->parent != to_erase)
         {
-            replace->parent->left = replace->right;
-            if (replace->right) replace->right->parent = replace->parent;
-            replace->right = to_erase->right;
-            to_erase->right->parent = replace;
+            //replace->right takes place of the replace
+            replace->parent->setLeft(replace->right);
+            //replace takes place of the erased
+            replace->setRight(to_erase->right);
         }
-        replace->left = to_erase->left;
-        to_erase->left->parent = replace;
+        // anyway, link replace with left of the erased
+        replace->setLeft(to_erase->left)
     }
 
+    // if we erased root -- change the root
     if (to_erase->parent == nullptr)
         _root = replace;
+    // else retarget parent node to the replacement node
     else
     {
         if (to_erase->parent->left == to_erase)
-            to_erase->parent->left = replace;
+            to_erase->parent->setLeft(replace);
         else
-            to_erase->parent->right = replace;
+            to_erase->parent->setRight(replace);
     }
 
-    if (replace != nullptr) replace->parent = to_erase->parent;
-
+    // delete node
     to_erase->right = to_erase->left = nullptr;
     delete to_erase;
+    
+    // reduce size
     --_size;
 
     return iterator(replace);
