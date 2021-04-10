@@ -9,7 +9,9 @@
 #include "../../Advanced/Vector/Vector.h"
 #include <ctime>
 
-typedef Dictionary<String, String, List> Dict;
+template <class T>
+using AVector = Advanced::Vector<T>;
+typedef Dictionary<String, String, AVector> Dict;
 const char* filename = "dictionary-ru.txt";
 
 int main()
