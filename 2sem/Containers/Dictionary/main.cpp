@@ -11,7 +11,7 @@
 
 template <class T>
 using AVector = Advanced::Vector<T>;
-typedef Dictionary<String, String, AVector> Dict;
+typedef Dictionary<String, String, Vector> Dict;
 const char* filename = "dictionary-ru.txt";
 
 int main()
@@ -28,19 +28,25 @@ int main()
     clock_t start = clock();
     size_t counter = 0;
     Pair<String, String> curr_word;
-    while (++counter < 20000)//(!in.eof())
+    while (!in.eof())
     {
         in >> curr_word;
-        dict.insert(curr_word);
+        //dict[curr_word._key] = curr_word._value;
+       // dict.insert(curr_word);
+        dict.insert(std::move(curr_word));
     }
     std::cout << "Elapsed: " << 1000 * (double)(clock() - start) / CLOCKS_PER_SEC << "\n";
 
     std::cout << "Dict size: " << dict.size() << "\n";
     std::cout << "Input word to translate: ";
     String word;
-    std::cin >> word;
-
-    std::cout << "Translation: " << dict[word] << "\n";
+    //std::cin >> word;
+    start = clock();
+    for (int i=0;i<1000;++i)
+        String const& it = dict["ark"];
+    std::cout << "Elapsed: " << 1000 * (double)(clock() - start) / CLOCKS_PER_SEC << "\n";
+    
+    std::cout << "Translation: " << dict["ark"] << "\n";
 
     in.close();
     return 0;

@@ -31,6 +31,11 @@ public:
     {
         _container.insert(p);
     }
+
+    void insert(Pair<Key, Value>&& p)
+    {
+        _container.insert(std::move(p));
+    }
 };
 
 

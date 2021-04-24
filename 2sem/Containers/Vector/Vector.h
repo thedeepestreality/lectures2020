@@ -70,6 +70,7 @@ public:
     };
 
     iterator push_back(Type const& val);
+    iterator push_back(Type&& val);
     
     void clear()
     {
@@ -86,6 +87,7 @@ public:
     //Type const& operator[](int idx) const;
 
     iterator insert(Type const& val) { return push_back(val); }
+    iterator insert(Type&& val) { return push_back(std::move(val)); }
     //void resize(size_t new_size);
 
     iterator find(Type const& to_find);
@@ -105,14 +107,35 @@ typename Vector<Type>::iterator Vector<Type>::push_back(Type const& val)
         size_t safe_capacity = _capacity <= 1 ? kDefCapacity : _capacity;
         size_t new_capacity = safe_capacity * kDefMultiplier();
         Type* tmp_data = new Type[new_capacity];
-        for (size_t idx = 0; idx < _size; ++_size)
-            tmp_data[idx] = _data[idx];
+        for (size_t idx = 0; idx < _size; ++idx)
+            //tmp_data[idx] = _data[idx];
+            tmp_data[idx] = std::move(_data[idx]);
         if (!_data)
             delete[] _data;
         _capacity = new_capacity;
         _data = tmp_data;
     }
     _data[_size++] = val;
+    return iterator(_data + _size - 1);
+}
+
+template <class Type>
+typename Vector<Type>::iterator Vector<Type>::push_back(Type&& val)
+{
+    if (_size == _capacity)
+    {
+        size_t safe_capacity = _capacity <= 1 ? kDefCapacity : _capacity;
+        size_t new_capacity = safe_capacity * kDefMultiplier();
+        Type* tmp_data = new Type[new_capacity];
+        for (size_t idx = 0; idx < _size; ++idx)
+            //tmp_data[idx] = _data[idx];
+            tmp_data[idx] = std::move(_data[idx]);
+        if (!_data)
+            delete[] _data;
+        _capacity = new_capacity;
+        _data = tmp_data;
+    }
+    _data[_size++] = std::move(val);
     return iterator(_data + _size - 1);
 }
 
@@ -190,6 +213,7 @@ public:
             size_t old_byte_size = _size / 8 + (_size % 8 != 0);
             for (size_t i = 0; i < old_byte_size; ++i)
                 tmp[i] = _data[i];
+                
             if (!_data)
                 delete[] _data;
             _data = tmp;

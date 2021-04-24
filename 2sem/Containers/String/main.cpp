@@ -15,5 +15,7 @@ int main()
 
     std::cout << str_from_cin;
 
+    str_from_cin = String("abc");
+
     return 0;
 }

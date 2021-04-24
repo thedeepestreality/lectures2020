@@ -15,6 +15,13 @@ String::String(size_t size) :   _size(size + 1),
 
 String::String(String const& str) : String(str.str()) {}
 
+String::String(String&& str) : _size(str._size),
+                               _data(str._data)
+{
+    str._size = 0;
+    str._data = nullptr;
+}
+
 String::~String()
 {
     if (_data)
@@ -32,6 +39,11 @@ size_t String::length() const
 }
 
 const char* String::str() const
+{
+    return _data;
+}
+
+char* String::str()
 {
     return _data;
 }
@@ -59,6 +71,20 @@ String& String::operator=(String const& str)
     return *this;
 }
 
+String& String::operator=(String&& str)
+{
+    if (this != &str)
+    {
+        if (_data != nullptr)
+            delete[] _data;
+        _size = str._size;
+        _data = str._data;
+        str._data = nullptr;
+        str._size = 0;
+    }
+    return *this;
+}
+
 String& String::operator+=(String const& str)
 {
     String tmp(length() + str.length());
@@ -71,6 +97,22 @@ String& String::operator+=(String const& str)
 String operator+(String const& left, String const& right)
 {
     return String(left) += right;
+}
+
+void String::reserve(size_t size)
+{
+    if (size + 1 <= _size)
+    {
+        _size = size + 1;
+        _data[size] = '\0';
+        return;
+    }
+
+    _size = size + 1;
+    char* tmp_data = new char[size + 1];
+    for (size_t idx = 0; idx < strlen(_data); ++idx)
+        tmp_data[idx] = _data[idx];
+    tmp_data[strlen(_data)] = '\0';
 }
 
 bool operator==(String const& left, String const& right)
@@ -108,8 +150,10 @@ std::ostream& operator<<(std::ostream& out, String const& str)
 std::istream& operator>>(std::istream& in, String& str)
 {
     static const int buff_size = 128;
-    char buffer[buff_size];
-    in.getline(buffer, buff_size);
-    str = String(buffer);
+    str.reserve(buff_size);
+    in.getline(str.str(), buff_size);
+    //char buffer[buff_size];
+    //in.getline(buffer, buff_size);
+    //str = String(buffer);
     return in;
 }

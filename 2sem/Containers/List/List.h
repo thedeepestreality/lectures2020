@@ -116,7 +116,13 @@ typename List<Type>::iterator List<Type>::push_back(Type const& val)
     }
 
     Node* new_node = new Node(val);
+
     _last->next = new_node;
+    //Node* curr = _root;
+    //while (curr->next != nullptr)
+    //    curr = curr->next;
+    //curr->next = new_node;
+
     _last = new_node;
     ++_size;
     return iterator(_last);

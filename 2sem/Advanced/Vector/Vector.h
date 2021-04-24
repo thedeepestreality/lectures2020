@@ -1,6 +1,7 @@
 #pragma once
-
-namespace Advanced {
+#include <exception>
+namespace Advanced
+{
     template <class Type>
     class Vector
     {
@@ -64,8 +65,10 @@ namespace Advanced {
         //Type const& operator[](int idx) const;
 
         iterator push_back(Type const& val);
+        iterator push_back(Type&& val);
 
         iterator insert(Type const& val) { return push_back(val); }
+        iterator insert(Type&& val) { return push_back(std::move(val)); }
         //void resize(size_t new_size);
 
         iterator find(Type const& to_find);
@@ -103,7 +106,7 @@ namespace Advanced {
         {
             Type* tmp_data = reinterpret_cast<Type*>(::operator new(new_capacity * sizeof(Type)));
             for (size_t idx = 0; idx < _size; ++idx)
-                new(tmp_data + idx) Type(_data[idx]);
+                new(tmp_data + idx) Type(std::move(_data[idx]));
             size_t prev_size = _size;
             clear();
             _data = tmp_data;
@@ -122,6 +125,19 @@ namespace Advanced {
         }
 
         new(_data + (_size++)) Type(val);
+        return iterator(_data + (_size - 1));
+    }
+
+    template <class Type>
+    typename Vector<Type>::iterator Vector<Type>::push_back(Type&& val)
+    {
+        if (_size == _capacity)
+        {
+            size_t safe_capacity = _capacity <= 1 ? kDefCapacity : _capacity;
+            reserve(safe_capacity * kDefMultiplier());
+        }
+
+        new(_data + (_size++)) Type(std::move(val));
         return iterator(_data + (_size - 1));
     }
 
