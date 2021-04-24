@@ -19,6 +19,15 @@ public:
 
     Vector(Vector const& vec) : Vector(vec._data, vec._size) {}
 
+    Vector(std::initializer_list<Type> list):_size(list.size()),
+                                             _capacity(list.size())
+    {
+        _data = new Type[_size];
+        size_t idx = 0;
+        for (auto it = list.begin(); it != list.end(); ++it)
+            _data[idx++] = *it;
+    }
+
     Vector& operator=(Vector const& vec)
     {
         ///TODO: implement

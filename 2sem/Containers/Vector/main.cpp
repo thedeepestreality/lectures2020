@@ -3,8 +3,17 @@
 #include <ctime>
 #include "../String/String.h"
 
+int sum(std::initializer_list<int> list)
+{
+    int s = 0;
+    for (auto it = list.begin(); it != list.end(); ++it)
+        s += *it;
+    return s;
+}
+
 int main()
 {
+    std::cout << "sum = " << sum({ 1,2,3,4,5 }) << '\n';
     Vector<int> v;
     v.push_back(1);
     v.push_back(2);
@@ -40,6 +49,8 @@ int main()
     for (size_t i = 0; i < iter; ++i)
         vec.push_back(s);
     std::cout << "Elapsed: " << 1000 * (double)(clock() - start) / CLOCKS_PER_SEC << "\n";
+
+    Vector<int> from_init_list = { 1,2,3,4,5 };
 
     return 0;
 }
