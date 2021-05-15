@@ -3,6 +3,7 @@
 #include <stack>
 #include <map>
 #include <functional>
+#include "ifx2pfx.h"
 
 int calcPostfixLong(std::string const& expr)
 {
@@ -67,9 +68,10 @@ int calcPostfixShort(std::string const& expr)
 
 int main()
 {
-    int(*calcPostfix)(std::string const&) = calcPostfixShort;
+ /*   int(*calcPostfix)(std::string const&) = calcPostfixShort;
     std::string expr = "34*2+";
-    std::cout << expr << " = " << calcPostfix(expr) << "\n";
+    std::cout << expr << " = " << calcPostfix(expr) << "\n";*/
+    std::cout << infixToPostfix("2+3*4") << "\n";
 
     return 0;
 }
