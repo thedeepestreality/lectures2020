@@ -23,5 +23,14 @@
     <ClInclude Include="ifx2pfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FormulaNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="calc_postfix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FormulaTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

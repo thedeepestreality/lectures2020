@@ -142,6 +142,9 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="calc_postfix.h" />
+    <ClInclude Include="FormulaNode.h" />
+    <ClInclude Include="FormulaTree.h" />
     <ClInclude Include="ifx2pfx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
