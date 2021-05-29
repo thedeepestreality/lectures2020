@@ -147,7 +147,8 @@ void totally_good_f(int x)
     std::unique_ptr<Dummy> dup = std::make_unique<Dummy>();
     std::shared_ptr<Dummy> dsp = std::move(dup);
 
-    dsp.reset();
+   // dsp.reset(); //release ownership
+    // dsp.reset(ptr); //owning new ptr
 }
 
 int main()
