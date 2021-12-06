@@ -2,9 +2,58 @@
 #include "BmpStructures.h"
 #include "ImgFunctions.h"
 
+void generate_gs_img()
+{
+	GsImg gray;
+	gray.height = 51;
+	gray.width = 6 * gray.height;
+	gray.pixels = new BYTE * [gray.height];
+	for (size_t r = 0; r < gray.height; ++r)
+	{
+		gray.pixels[r] = new BYTE[gray.width];
+		for (size_t c = 0; c < gray.width; ++c)
+			gray.pixels[r][c] = 255;
+	}
+
+	for (size_t bright = 0; bright < 6; ++bright)
+		for (size_t r = 0; r < gray.height; ++r)
+			for (size_t c = bright * gray.height; c < (bright + 1) * gray.height; ++c)
+				gray.pixels[r][c] = bright*51;
+
+	writeGsImg("own_gray.bmp", gray);
+
+	for (size_t r = 0; r < gray.height; ++r)
+	{
+		delete[] gray.pixels[r];
+	}
+	delete[] gray.pixels;
+}
+
+void generate_gs_gradient()
+{
+	GsImg gray;
+	gray.height = 50;
+	gray.width = 256;
+	gray.pixels = new BYTE * [gray.height];
+	for (size_t r = 0; r < gray.height; ++r)
+	{
+		gray.pixels[r] = new BYTE[gray.width];
+		for (size_t c = 0; c < gray.width; ++c)
+			gray.pixels[r][c] = c;
+	}
+
+	writeGsImg("gray_gradient.bmp", gray);
+
+	for (size_t r = 0; r < gray.height; ++r)
+	{
+		delete[] gray.pixels[r];
+	}
+	delete[] gray.pixels;
+}
+
 int main()
 {
-	try
+	/*try
 	{
 		RgbImg img = read_rgb_img("test.bmp");
 	
@@ -21,7 +70,11 @@ int main()
 	{
 		std::cout << "Error happened: " << error.what() << '\n';
 		return 1;
-	}
+	}*/
+
+	generate_gs_img();
+	generate_gs_gradient();
+	
 	std::cout << "Success!\n";
 	return 0;
 }

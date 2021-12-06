@@ -3,7 +3,7 @@
 #include <exception>
 #include <iostream>
 
-int get_offset(int width)
+int getOffset(int width)
 {
     int offset = 0;
     if (width % 4)
@@ -11,7 +11,7 @@ int get_offset(int width)
     return offset;
 }
 
-RgbImg read_rgb_img(const char filename[])
+RgbImg readRgbImg(const char* filename)
 {
     std::ifstream bmp_in(filename, std::ios::binary);
     if (!bmp_in.is_open())
@@ -23,7 +23,7 @@ RgbImg read_rgb_img(const char filename[])
     bmp_in.read((char*)&bmfh, sizeof(BITMAPFILEHEADER));
     bmp_in.read((char*)&bmih, sizeof(BITMAPINFOHEADER));
 
-    const int offset = get_offset(bmih.biWidth);
+    const int offset = getOffset(bmih.biWidth);
 
     RgbImg img;
     img.height = bmih.biHeight;
@@ -42,13 +42,13 @@ RgbImg read_rgb_img(const char filename[])
     return img;
 }
 
-void write_rgb_img(char const filename[], RgbImg const& img)
+void writeRgbImg(char const* filename, RgbImg const& img)
 {
     std::ofstream bmp_out(filename, std::ios::binary);
     if (!bmp_out.is_open())
         throw std::runtime_error("Failed to open output file");
 
-    const int offset = get_offset(img.width);
+    const int offset = getOffset(img.width);
 
     BITMAPFILEHEADER bmfh;
     char bfType[] = { 'B', 'M' };
@@ -84,7 +84,57 @@ void write_rgb_img(char const filename[], RgbImg const& img)
     bmp_out.close();
 }
 
-void print_rgb_img_info(const char filename[])
+void writeGsImg(char const* filename, GsImg const& img)
+{
+    std::ofstream bmp_out(filename, std::ios::binary);
+    if (!bmp_out.is_open())
+        throw std::runtime_error("Failed to open output file");
+
+    const int offset = getOffset(img.width);
+
+    BITMAPFILEHEADER bmfh;
+    char bfType[] = { 'B', 'M' };
+    bmfh.bfType = *((WORD*)bfType); // ('M' << 8) | 'B';
+    bmfh.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
+    bmfh.bfSize = bmfh.bfOffBits + img.height * img.width + 256*4;
+    bmfh.bfReserved1 = bmfh.bfReserved2 = 0;
+
+    BITMAPINFOHEADER bmih;
+    bmih.biClrImportant = bmih.biClrUsed = 256;
+    bmih.biCompression = 0;
+    bmih.biPlanes = bmih.biXPelsPerMeter = bmih.biYPelsPerMeter = 1;
+    bmih.biSize = sizeof(BITMAPINFOHEADER);
+    bmih.biSizeImage = bmfh.bfSize - bmfh.bfOffBits;
+    bmih.biHeight = img.height;
+    bmih.biWidth = img.width;
+    bmih.biBitCount = 8;
+
+    RGBQUAD grayscale[256];
+    BYTE idx = 0;
+    do {
+        grayscale[idx] = { idx, idx, idx, 0 };
+    } while (++idx != 0);
+
+    bmp_out.write((char*)&bmfh, sizeof(BITMAPFILEHEADER));
+    bmp_out.write((char*)&bmih, sizeof(BITMAPINFOHEADER));
+    bmp_out.write((char*)grayscale, 256 * 4);
+
+    BYTE* offset_array = new BYTE[offset];
+    for (int i = 0; i < offset; ++i)
+        offset_array[i] = 0;
+
+    for (size_t row = 0; row < img.height; ++row)
+    {
+        for (size_t col = 0; col < img.width; ++col)
+            bmp_out.write((char*)&img.pixels[row][col], 1);
+        bmp_out.write((char*)offset_array, offset);
+    }
+
+    delete[] offset_array;
+    bmp_out.close();
+}
+
+void printImgInfo(const char* filename)
 {
     std::ifstream bmp_in(filename, std::ios::binary);
     if (!bmp_in.is_open())

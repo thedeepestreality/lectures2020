@@ -38,18 +38,6 @@ struct RGBQUAD {
   BYTE rgbReserved;
 };
 
-struct COMPRESSEDHEADER
-{
-	WORD biWidth;
-	WORD biHeight;
-};
-
-struct BMRUN
-{
-	WORD rWidth;
-	BYTE rClr;
-};
-
 struct RGB
 {
 	BYTE Blue;
@@ -60,9 +48,17 @@ struct RGB
 struct RgbImg
 {
 	RGB** pixels;
-	unsigned int width;
-	unsigned int height;
+    size_t width;
+    size_t height;
 };
+
+struct GsImg
+{
+    BYTE** pixels;
+    size_t width;
+    size_t height;
+};
+
 //А эта строчка отменяет отмену выравнивания :)
 #pragma pack(pop)
 
